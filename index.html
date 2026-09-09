@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17202E">
+<title>Inventario PyC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#17202E; --ink-soft:#5B6878; --paper:#FFF; --surface:#EDF0F3;
+  --line:#D5DCE3; --accent:#B3005E; --accent-dark:#8C0049;
+  --ok:#0E7C5A; --warn:#B4530A; --radius:10px; --tabbar:58px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Barlow',system-ui,sans-serif;color:var(--ink);
+  background:var(--surface);font-size:16px;line-height:1.45;
+  padding-bottom:calc(var(--tabbar) + env(safe-area-inset-bottom));
+}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff;padding:11px 16px 13px}
+.top-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.marca{font-family:'Barlow Semi Condensed';font-weight:700;font-size:20px}
+.estado{font-size:12.5px;color:#9FB0C4}
+.estado.vivo{color:#6FD3AC}
+.resumen{display:flex;gap:18px;margin-top:8px}
+.dato{display:flex;flex-direction:column}
+.dato b{font-family:'Barlow Semi Condensed';font-weight:700;font-size:22px;line-height:1.1}
+.dato span{font-size:12px;color:#9FB0C4}
+
+.aviso{background:#FFF3D6;color:#6B4A00;padding:10px 16px;font-size:13.5px;border-bottom:1px solid #E8D5A0}
+.aviso code{font-family:ui-monospace,monospace;font-size:12.5px}
+
+.barra{display:flex;gap:8px;padding:12px 12px 8px}
+.barra input{flex:1;min-width:0;padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper)}
+.barra input::placeholder{color:#9AA7B4}
+.escanear{flex:none;width:56px;border-radius:var(--radius);background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
+.escanear svg{width:26px;height:26px}
+
+.lista{padding:0 12px 20px;display:flex;flex-direction:column;gap:7px}
+.fila{display:flex;align-items:center;gap:11px;background:var(--paper);border-radius:var(--radius);padding:11px 11px 11px 14px}
+.fila-txt{flex:1;min-width:0}
+.fila-nom{font-family:'Barlow Semi Condensed';font-weight:600;font-size:17.5px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-nom.sn{color:var(--warn)}
+.fila-meta{font-size:12.5px;color:var(--ink-soft);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-precio{font-weight:600;white-space:nowrap}
+.chip{min-width:42px;text-align:center;padding:4px 8px;border-radius:7px;font-family:'Barlow Semi Condensed';font-weight:700;font-size:16px;background:var(--surface)}
+.chip.cero{background:#FDE2E2;color:#A31212}
+.chip.poco{background:#FFF0D6;color:var(--warn)}
+.chip.ok{background:#DCF3E9;color:var(--ok)}
+.vender{width:58px;height:50px;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:'Barlow Semi Condensed';font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none}
+.vender:active{background:var(--accent-dark)}
+.vender[disabled]{background:#C9D1D9;color:#7A8794}
+.mini{width:38px;height:38px;border-radius:8px;background:var(--surface);font-weight:700;font-size:18px;flex:none}
+.cant{width:56px;padding:9px 6px;text-align:center;border:1.5px solid var(--line);border-radius:8px;font-weight:600;flex:none}
+
+.vacio{padding:40px 24px;text-align:center;color:var(--ink-soft)}
+.vacio b{display:block;font-family:'Barlow Semi Condensed';font-size:19px;color:var(--ink);margin-bottom:4px}
+
+.bloque{background:var(--paper);border-radius:var(--radius);padding:16px;margin:0 12px 12px}
+.bloque h2{font-family:'Barlow Semi Condensed';font-weight:700;font-size:19px;margin-bottom:3px}
+.bloque p{font-size:14px;color:var(--ink-soft);margin-bottom:12px}
+.btn{display:inline-block;padding:12px 16px;border-radius:var(--radius);background:var(--ink);color:#fff;font-weight:600;font-size:15px}
+.btn.sec{background:var(--surface);color:var(--ink)}
+.btn.acc{background:var(--accent);color:#fff}
+.btn.ancho{display:block;width:100%;text-align:center}
+.btn[disabled]{opacity:.45;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.campo{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.campo input,.campo select{flex:1;padding:11px 12px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper);min-width:0}
+.campo label{font-size:14px;color:var(--ink-soft);flex:none;width:88px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin-bottom:12px;cursor:pointer}
+.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--accent)}
+
+.previa{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
+.cuenta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.cuenta span{padding:5px 10px;border-radius:7px;background:var(--surface);font-size:13.5px;font-weight:600}
+.cuenta .nuevo{background:#DCF3E9;color:var(--ok)}
+.cuenta .cambio{background:#FFF0D6;color:var(--warn)}
+.cuenta .malo{background:#FDE2E2;color:#A31212}
+.tabla{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.tabla table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tabla th{position:sticky;top:0;background:var(--surface);text-align:left;padding:8px 10px;font-weight:600;font-size:12.5px;color:var(--ink-soft)}
+.tabla td{padding:8px 10px;border-top:1px solid var(--line)}
+.tabla .d{color:var(--warn);font-weight:600}
+.tabla .falta{color:#A31212;font-weight:600}
+.tabla .sobra{color:var(--ok);font-weight:600}
+
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;background:var(--paper);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabs button{flex:1;height:var(--tabbar);font-family:'Barlow Semi Condensed';font-weight:600;font-size:13.5px;color:var(--ink-soft);border-top:3px solid transparent;padding:0 2px}
+.tabs button[aria-current="true"]{color:var(--accent);border-top-color:var(--accent)}
+.tabs .punto{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);vertical-align:middle;margin-left:3px}
+
+.toast{position:fixed;left:12px;right:12px;bottom:calc(var(--tabbar) + 12px + env(safe-area-inset-bottom));z-index:60;background:var(--ink);color:#fff;border-radius:var(--radius);padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14.5px}
+.toast button{color:#7FE3BC;font-weight:700;white-space:nowrap}
+.toast.err{background:#8C1010}
+.toast.err button{color:#FFC9C9}
+@media (prefers-reduced-motion:no-preference){
+  .toast{animation:sube .16s ease-out}
+  @keyframes sube{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+}
+
+.escaner{position:fixed;inset:0;z-index:70;background:#000;display:flex;flex-direction:column}
+.escaner video{flex:1;width:100%;object-fit:cover;min-height:0}
+.mira{position:absolute;left:10%;right:10%;top:50%;height:150px;transform:translateY(-50%);border:2px solid rgba(255,255,255,.85);border-radius:12px;box-shadow:0 0 0 100vmax rgba(0,0,0,.45)}
+.esc-top{position:absolute;top:0;left:0;right:0;padding:16px;padding-top:calc(16px + env(safe-area-inset-top));color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:2}
+.esc-top b{font-family:'Barlow Semi Condensed';font-weight:700;font-size:18px}
+.esc-top button{color:#fff;font-size:16px;font-weight:600;padding:6px 10px}
+.esc-pie{position:absolute;bottom:0;left:0;right:0;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));color:#fff;text-align:center;font-size:14.5px;z-index:2}
+.esc-cont{font-family:'Barlow Semi Condensed';font-weight:700;font-size:26px;display:block}
+.alta{position:absolute;inset:auto 0 0 0;z-index:3;background:var(--paper);border-radius:16px 16px 0 0;padding:18px 16px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.alta h3{font-family:'Barlow Semi Condensed';font-weight:700;font-size:19px;margin-bottom:2px}
+.alta p{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px}
+.alta code{font-family:ui-monospace,monospace}
+
+@media (min-width:760px){
+  body{padding-bottom:0}
+  .tabs{position:static;border-top:none;border-bottom:1px solid var(--line)}
+  .tabs button{font-size:15px}
+  .lista,.bloque,.barra{max-width:760px;margin-left:auto;margin-right:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-row">
+    <div class="marca">Inventario PyC</div>
+    <div class="estado" id="estado">conectando</div>
+  </div>
+  <div class="resumen">
+    <div class="dato"><b id="n-prod">—</b><span>productos</span></div>
+    <div class="dato"><b id="n-unid">—</b><span>unidades</span></div>
+    <div class="dato"><b id="n-hoy">—</b><span>vendidos hoy</span></div>
+  </div>
+</header>
+
+<div class="aviso" id="aviso" hidden></div>
+
+<nav class="tabs" id="tabs"></nav>
+<main id="app"></main>
+
+<script>
+/* =====================================================================
+   1. CONFIGURACION
+   Supabase > boton Connect (o Settings > API Keys)
+   Sirve la clave nueva sb_publishable_... o la vieja anon.
+   NUNCA pongas aca una clave sb_secret_... ni la service_role.
+   ===================================================================== */
+const SUPABASE_URL = "";
+const SUPABASE_KEY = "";
+/* ===================================================================== */
+
+const CONECTADO = Boolean(SUPABASE_URL && SUPABASE_KEY);
+const ES_JWT = SUPABASE_KEY.startsWith("eyJ");
+const COLUMNAS = ["codigo","ean_alt","nombre","rubro","subrubro","precio","costo",
+                  "stock","descripcion","foto_url_1","foto_url_2","foto_url_3","activo"];
+const SIN_NOMBRE = "Sin nombre ";
+
+let productos = [], vista = "vender", filtro = "";
+let previaCsv = null, ultimoMov = null;
+let conteo = {}, cerrarConteo = false, ponerCeroNoContado = false;
+
+let demoProd = [
+  {codigo:"6295514063724",ean_alt:null,nombre:"Tubito 35ml ZMA9898-172",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,stock:2},
+  {codigo:"6295514063151",ean_alt:null,nombre:"Tubito 35ml ZMA9898-115",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,stock:2},
+  {codigo:"6944348570723",ean_alt:null,nombre:"HONEY SQUEEZE VL9052-S1-02",rubro:"Perfumeria",subrubro:"Mini perfumes",precio:14000,costo:6300,activo:true,stock:1},
+  {codigo:"CON-060-001",ean_alt:null,nombre:"Concentrado 60ml Asad",rubro:"Perfumeria",subrubro:"Concentrados 60ml",precio:15000,costo:0,activo:true,stock:4},
+  {codigo:"TUP-001",ean_alt:null,nombre:"Tupperware remanente",rubro:"Tupperware",subrubro:"",precio:12000,costo:0,activo:true,stock:0}
+];
+let demoMov = [], demoId = 1;
+
+/* =====================================================================
+   2. DATOS
+   ===================================================================== */
+async function api(ruta, opciones = {}) {
+  const r = await fetch(SUPABASE_URL + "/rest/v1/" + ruta, {
+    ...opciones,
+    headers: {
+      apikey: SUPABASE_KEY,
+      ...(ES_JWT ? {Authorization: "Bearer " + SUPABASE_KEY} : {}),
+      "Content-Type": "application/json",
+      ...(opciones.headers || {})
+    }
+  });
+  if (!r.ok) throw new Error(await r.text() || ("HTTP " + r.status));
+  const txt = await r.text();
+  return txt ? JSON.parse(txt) : null;
+}
+
+async function cargar() {
+  if (!CONECTADO) { productos = demoProd.map(p => ({...p})); return; }
+  productos = await api("v_stock?select=*&order=nombre.asc");
+}
+
+async function nuevoMovimiento(codigo, tipo, cantidad, nota) {
+  const fila = {codigo, tipo, cantidad, nota: nota || null};
+  if (!CONECTADO) {
+    const m = {...fila, id: demoId++, creado_en: new Date().toISOString()};
+    demoMov.push(m);
+    const p = demoProd.find(x => x.codigo === codigo);
+    if (p) p.stock += cantidad;
+    return m;
+  }
+  const r = await api("movimientos", {
+    method: "POST", headers: {Prefer: "return=representation"},
+    body: JSON.stringify(fila)
+  });
+  return r[0];
+}
+
+async function borrarMovimiento(id) {
+  if (!CONECTADO) {
+    const i = demoMov.findIndex(m => m.id === id);
+    if (i < 0) return;
+    const p = demoProd.find(x => x.codigo === demoMov[i].codigo);
+    if (p) p.stock -= demoMov[i].cantidad;
+    demoMov.splice(i, 1);
+    return;
+  }
+  await api("movimientos?id=eq." + id, {method: "DELETE"});
+}
+
+async function guardarProductos(filas) {
+  if (!CONECTADO) {
+    filas.forEach(f => {
+      const i = demoProd.findIndex(p => p.codigo === f.codigo);
+      if (i >= 0) Object.assign(demoProd[i], f);
+      else demoProd.push({...f, stock: 0});
+    });
+    return;
+  }
+  await api("productos", {
+    method: "POST", headers: {Prefer: "resolution=merge-duplicates"},
+    body: JSON.stringify(filas)
+  });
+}
+
+async function ventasDeHoy() {
+  const desde = new Date(); desde.setHours(0,0,0,0);
+  if (!CONECTADO)
+    return demoMov.filter(m => m.tipo === "venta" && new Date(m.creado_en) >= desde)
+                  .reduce((a,m) => a - m.cantidad, 0);
+  const r = await api("movimientos?select=cantidad&tipo=eq.venta&creado_en=gte." + desde.toISOString());
+  return r.reduce((a,m) => a - m.cantidad, 0);
+}
+
+function porCodigo(c) {
+  return productos.find(p => p.codigo === c || (p.ean_alt && p.ean_alt === c));
+}
+
+/* ---------- conteo guardado en el celular ---------- */
+function guardarConteo() {
+  try { localStorage.setItem("pyc-conteo", JSON.stringify(conteo)); } catch (_) {}
+}
+function recuperarConteo() {
+  try {
+    const g = localStorage.getItem("pyc-conteo");
+    if (g) conteo = JSON.parse(g) || {};
+  } catch (_) { conteo = {}; }
+}
+function limpiarConteo() {
+  conteo = {};
+  try { localStorage.removeItem("pyc-conteo"); } catch (_) {}
+}
+
+/* =====================================================================
+   3. CSV
+   ===================================================================== */
+function leerCsv(texto) {
+  const filas = []; let campo = "", fila = [], comillas = false;
+  texto = texto.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
+  for (let i = 0; i < texto.length; i++) {
+    const c = texto[i];
+    if (comillas) {
+      if (c === '"' && texto[i+1] === '"') { campo += '"'; i++; }
+      else if (c === '"') comillas = false;
+      else campo += c;
+    } else if (c === '"') comillas = true;
+    else if (c === ",") { fila.push(campo); campo = ""; }
+    else if (c === "\n") { fila.push(campo); filas.push(fila); fila = []; campo = ""; }
+    else campo += c;
+  }
+  if (campo || fila.length) { fila.push(campo); filas.push(fila); }
+  if (!filas.length) return [];
+  const cab = filas.shift().map(h => h.trim().toLowerCase());
+  return filas.filter(f => f.some(v => v.trim() !== ""))
+              .map(f => Object.fromEntries(cab.map((h,i) => [h, (f[i] ?? "").trim()])));
+}
+
+function armarCsv(filas) {
+  const esc = v => {
+    const s = v === null || v === undefined ? "" : String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+  };
+  return [COLUMNAS.join(",")]
+    .concat(filas.map(f => COLUMNAS.map(c => esc(f[c])).join(",")))
+    .join("\n");
+}
+
+function bajarArchivo(nombre, contenido) {
+  const url = URL.createObjectURL(new Blob([contenido], {type:"text/csv;charset=utf-8"}));
+  const a = document.createElement("a");
+  a.href = url; a.download = nombre; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function compararCsv(filasCsv) {
+  const idx = {}; productos.forEach(p => { idx[p.codigo] = p; });
+  const nuevos = [], cambios = [], iguales = [], rotos = [];
+  filasCsv.forEach((f, i) => {
+    const codigo = (f.codigo || f.sku || f.ean || "").trim();
+    if (!codigo) { rotos.push({linea:i+2, motivo:"sin codigo"}); return; }
+    if (!f.nombre) { rotos.push({linea:i+2, motivo:"sin nombre"}); return; }
+    const fila = {
+      codigo, ean_alt: f.ean_alt || null, nombre: f.nombre,
+      rubro: f.rubro || null, subrubro: f.subrubro || null,
+      precio: Number(f.precio || 0) || 0, costo: Number(f.costo || 0) || 0,
+      descripcion: f.descripcion || null,
+      foto_url_1: f.foto_url_1 || null, foto_url_2: f.foto_url_2 || null,
+      foto_url_3: f.foto_url_3 || null,
+      activo: !["0","false","no"].includes(String(f.activo).toLowerCase())
+    };
+    const stockCsv = f.stock === "" || f.stock === undefined ? null : Number(f.stock);
+    const viejo = idx[codigo];
+    if (!viejo) { nuevos.push({fila, stockCsv, stockViejo:0}); return; }
+    const dif = Number(viejo.precio) !== fila.precio
+             || viejo.nombre !== fila.nombre
+             || (stockCsv !== null && stockCsv !== viejo.stock);
+    (dif ? cambios : iguales).push({fila, stockCsv, stockViejo: viejo.stock, viejo});
+  });
+  return {nuevos, cambios, iguales, rotos};
+}
+
+async function aplicarCsv(previa) {
+  const todos = previa.nuevos.concat(previa.cambios);
+  if (!todos.length) return 0;
+  await guardarProductos(todos.map(t => t.fila));
+  for (const t of todos) {
+    if (t.stockCsv === null) continue;
+    const delta = t.stockCsv - t.stockViejo;
+    if (delta !== 0) await nuevoMovimiento(t.fila.codigo, "ajuste", delta, "carga CSV");
+  }
+  return todos.length;
+}
+
+/* =====================================================================
+   4. ESCANER
+   ===================================================================== */
+const HAY_ESCANER = "BarcodeDetector" in window;
+let capa = null, video = null, flujo = null, detector = null;
+let modoEsc = "vender", ultimoCodigo = "", ultimoMomento = 0, corriendo = false;
+let escaneadosEnSesion = 0;
+
+async function abrirEscaner(modo) {
+  if (!HAY_ESCANER) {
+    avisar("Este navegador no puede escanear. Usá Chrome en Android.", "error");
+    return;
+  }
+  modoEsc = modo; escaneadosEnSesion = 0; ultimoCodigo = "";
+  const titulos = {
+    vender: "Escaneá lo que vendés",
+    recibir: "Escaneá lo que entra",
+    conteo: "Contando inventario"
+  };
+  capa = document.createElement("div");
+  capa.className = "escaner";
+  capa.innerHTML = `
+    <video playsinline muted></video>
+    <div class="mira"></div>
+    <div class="esc-top"><b>${titulos[modo]}</b><button id="cerrar-esc">Listo</button></div>
+    <div class="esc-pie" id="esc-msg"><span class="esc-cont" id="esc-cont"></span>Apuntá al código de barras</div>`;
+  document.body.appendChild(capa);
+  video = capa.querySelector("video");
+
+  try {
+    flujo = await navigator.mediaDevices.getUserMedia({
+      video: {facingMode: {ideal: "environment"}, width: {ideal: 1280}}
+    });
+  } catch (err) {
+    cerrarEscaner();
+    avisar("No se pudo abrir la cámara. Revisá los permisos del navegador.", "error");
+    return;
+  }
+  video.srcObject = flujo;
+  await video.play();
+  detector = new BarcodeDetector({
+    formats: ["ean_13","ean_8","upc_a","upc_e","code_128","code_39","itf"]
+  });
+  corriendo = true;
+  bucle();
+}
+
+function cerrarEscaner() {
+  corriendo = false;
+  if (flujo) flujo.getTracks().forEach(t => t.stop());
+  flujo = null;
+  if (capa) capa.remove();
+  capa = null; video = null;
+}
+
+async function bucle() {
+  if (!corriendo || !video) return;
+  try {
+    const hallados = await detector.detect(video);
+    if (hallados.length) await manejarCodigo(hallados[0].rawValue.trim());
+  } catch (_) {}
+  if (corriendo) setTimeout(bucle, 200);
+}
+
+function mensajeEscaner(txt) {
+  const m = capa && capa.querySelector("#esc-msg");
+  const c = capa && capa.querySelector("#esc-cont");
+  if (c) c.textContent = escaneadosEnSesion || "";
+  if (m) {
+    const nodos = [...m.childNodes];
+    const ultimo = nodos[nodos.length - 1];
+    if (ultimo && ultimo.nodeType === 3) ultimo.textContent = txt;
+    else m.appendChild(document.createTextNode(txt));
+  }
+}
+
+async function manejarCodigo(codigo) {
+  const ahora = Date.now();
+  if (codigo === ultimoCodigo && ahora - ultimoMomento < 1500) return;
+  ultimoCodigo = codigo; ultimoMomento = ahora;
+
+  let p = porCodigo(codigo);
+
+  /* --- alta silenciosa: nunca frena el escaneo --- */
+  if (!p) {
+    try {
+      await guardarProductos([{
+        codigo, ean_alt: null, nombre: SIN_NOMBRE + codigo,
+        rubro: null, subrubro: null, precio: 0, costo: 0,
+        descripcion: null, foto_url_1: null, foto_url_2: null, foto_url_3: null,
+        activo: true
+      }]);
+      await cargar();
+      p = porCodigo(codigo);
+      if (navigator.vibrate) navigator.vibrate([90,50,90]);
+    } catch (err) { mensajeEscaner("No se pudo dar de alta: " + err.message); return; }
+  } else if (navigator.vibrate) {
+    navigator.vibrate(55);
+  }
+
+  escaneadosEnSesion++;
+  const sinNombre = p.nombre.startsWith(SIN_NOMBRE);
+
+  if (modoEsc === "conteo") {
+    conteo[codigo] = (conteo[codigo] || 0) + 1;
+    guardarConteo();
+    mensajeEscaner(`${p.nombre} · contadas ${conteo[codigo]}`);
+    return;
+  }
+
+  if (modoEsc === "vender") {
+    if (p.stock <= 0) { mensajeEscaner(`${p.nombre} — sin stock, se registró igual`); }
+    try {
+      const m = await nuevoMovimiento(codigo, "venta", -1, "escaneado");
+      ultimoMov = m.id;
+      await cargar();
+      const q = porCodigo(codigo);
+      mensajeEscaner(sinNombre
+        ? `Código nuevo registrado · quedan ${q ? q.stock : "?"}`
+        : `${p.nombre} · ${plata(p.precio)} · quedan ${q ? q.stock : "?"}`);
+      refrescarHoy();
+    } catch (err) { mensajeEscaner("Error: " + err.message); }
+    return;
+  }
+
+  try {
+    await nuevoMovimiento(codigo, "ingreso", 1, "escaneado");
+    await cargar();
+    const q = porCodigo(codigo);
+    mensajeEscaner(`${p.nombre} · ahora ${q ? q.stock : "?"}`);
+  } catch (err) { mensajeEscaner("Error: " + err.message); }
+}
+
+/* =====================================================================
+   5. PANTALLAS
+   ===================================================================== */
+const app = document.getElementById("app");
+const plata = n => "$" + Number(n || 0).toLocaleString("es-AR");
+
+function visibles() {
+  const q = filtro.trim().toLowerCase();
+  if (!q) return productos;
+  return productos.filter(p =>
+    (p.nombre||"").toLowerCase().includes(q) ||
+    (p.codigo||"").toLowerCase().includes(q) ||
+    (p.ean_alt||"").toLowerCase().includes(q) ||
+    (p.rubro||"").toLowerCase().includes(q) ||
+    (p.subrubro||"").toLowerCase().includes(q));
+}
+
+function claseChip(s) { return s <= 0 ? "chip cero" : s <= 2 ? "chip poco" : "chip"; }
+function nom(p) {
+  const sn = p.nombre.startsWith(SIN_NOMBRE);
+  return `<div class="fila-nom${sn ? " sn" : ""}">${p.nombre}</div>`;
+}
+
+const ICONO = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+<path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>
+<path d="M7 8v8M10.5 8v8M14 8v8M17 8v8"/></svg>`;
+
+function barra(ph, modo) {
+  return `<div class="barra">
+    <input id="q" type="search" placeholder="${ph}" value="${filtro.replace(/"/g,"&quot;")}">
+    <button class="escanear" data-escanear="${modo}" aria-label="Escanear con la cámara">${ICONO}</button>
+  </div>`;
+}
+
+function pantallaVender() {
+  if (!productos.length)
+    return barra("Buscar producto","vender") +
+      `<div class="vacio"><b>Todavía no hay productos</b>Empezá por Conteo para cargar todo escaneando, o importá tu CSV.</div>`;
+  const filas = visibles().map(p => `
+    <div class="fila">
+      <div class="fila-txt">${nom(p)}
+        <div class="fila-meta">${p.codigo}${p.subrubro ? " · " + p.subrubro : ""}</div></div>
+      <div class="fila-precio">${plata(p.precio)}</div>
+      <div class="${claseChip(p.stock)}">${p.stock}</div>
+      <button class="vender" data-vender="${p.codigo}" ${p.stock<=0?"disabled":""}>vendí</button>
+    </div>`).join("");
+  return barra("Buscar producto","vender") +
+    `<div class="lista">${filas || '<div class="vacio"><b>Nada con ese nombre</b>Probá con el código o el rubro.</div>'}</div>`;
+}
+
+function pantallaRecibir() {
+  const filas = (filtro ? visibles() : productos.slice(0,15)).map(p => `
+    <div class="fila">
+      <div class="fila-txt">${nom(p)}
+        <div class="fila-meta">${p.codigo} · costo ${plata(p.costo)}</div></div>
+      <div class="${claseChip(p.stock)}">${p.stock}</div>
+      <button class="mini" data-sumar="${p.codigo}" aria-label="Sumar uno">+</button>
+      <button class="mini" data-restar="${p.codigo}" aria-label="Restar uno">−</button>
+    </div>`).join("");
+  return `<div class="bloque">
+      <h2>Recibir mercadería</h2>
+      <p>Suma una unidad por escaneo. Los códigos que no conoce se dan de alta solos y no frenan el escaneo: después les ponés nombre desde la PC.</p>
+      <button class="btn acc ancho" data-escanear="recibir">Escanear la compra</button>
+    </div>` + barra("Buscar para cargar a mano","recibir") +
+    `<div class="lista">${filas || '<div class="vacio"><b>Sin resultados</b>Escaneá para dar de alta.</div>'}</div>`;
+}
+
+function pantallaConteo() {
+  const codigos = Object.keys(conteo);
+  const contadas = codigos.reduce((a,c) => a + conteo[c], 0);
+
+  if (cerrarConteo) {
+    const lineas = [];
+    productos.forEach(p => {
+      const c = conteo[p.codigo];
+      if (c === undefined && !ponerCeroNoContado) return;
+      const cont = c === undefined ? 0 : c;
+      const dif = cont - p.stock;
+      lineas.push({p, cont, dif});
+    });
+    lineas.sort((a,b) => Math.abs(b.dif) - Math.abs(a.dif));
+    const conDif = lineas.filter(l => l.dif !== 0);
+    const cuerpo = lineas.slice(0,120).map(l => `<tr>
+        <td>${l.p.nombre}</td><td>${l.p.stock}</td><td>${l.cont}</td>
+        <td class="${l.dif < 0 ? "falta" : l.dif > 0 ? "sobra" : ""}">${l.dif > 0 ? "+" : ""}${l.dif || "—"}</td>
+      </tr>`).join("");
+    return `<div class="bloque">
+      <h2>Resultado del conteo</h2>
+      <p>Esto es lo que contaste contra lo que decía el sistema. Nada se guardó todavía.</p>
+      <div class="cuenta">
+        <span>${lineas.length} productos</span>
+        <span class="${conDif.length ? "cambio" : "nuevo"}">${conDif.length} con diferencia</span>
+        <span class="nuevo">${contadas} unidades contadas</span>
+      </div>
+      <label class="check">
+        <input type="checkbox" id="cero" ${ponerCeroNoContado ? "checked" : ""}>
+        <span>Poner en cero lo que no conté. Marcalo solo si contaste absolutamente todo el puesto; si contaste una parte, dejalo sin marcar.</span>
+      </label>
+      <div class="tabla"><table>
+        <thead><tr><th>Producto</th><th>Sistema</th><th>Conté</th><th>Dif.</th></tr></thead>
+        <tbody>${cuerpo || '<tr><td colspan="4">Nada para comparar</td></tr>'}</tbody></table></div>
+      <div class="btns" style="margin-top:12px">
+        <button class="btn acc" id="aplicar-conteo" ${conDif.length ? "" : "disabled"}>Aplicar el conteo</button>
+        <button class="btn sec" id="volver-conteo">Seguir contando</button>
+      </div>
+    </div>`;
+  }
+
+  const filas = codigos.map(c => {
+    const p = porCodigo(c) || {nombre: SIN_NOMBRE + c, codigo: c, stock: 0};
+    return `<div class="fila">
+      <div class="fila-txt">${nom(p)}<div class="fila-meta">${p.codigo} · sistema ${p.stock}</div></div>
+      <input class="cant" type="number" inputmode="numeric" data-conteo="${c}" value="${conteo[c]}">
+      <button class="mini" data-quitar-conteo="${c}" aria-label="Sacar del conteo">×</button>
+    </div>`;
+  }).join("");
+
+  const paraSumar = filtro ? visibles().filter(p => conteo[p.codigo] === undefined).slice(0,10).map(p => `
+    <div class="fila">
+      <div class="fila-txt">${nom(p)}<div class="fila-meta">${p.codigo} · sistema ${p.stock}</div></div>
+      <button class="mini" data-agregar-conteo="${p.codigo}" aria-label="Agregar al conteo">+</button>
+    </div>`).join("") : "";
+
+  return `<div class="bloque">
+      <h2>Conteo de inventario</h2>
+      <p>Escaneá todo lo que tenés. Esto no suma al stock: fija la cantidad real. Al terminar te muestro las diferencias antes de guardar nada.</p>
+      <button class="btn acc ancho" data-escanear="conteo">${codigos.length ? "Seguir escaneando" : "Empezar a contar"}</button>
+      ${codigos.length ? `<div class="btns" style="margin-top:8px">
+        <button class="btn" id="ver-conteo">Ver diferencias (${contadas} unidades)</button>
+        <button class="btn sec" id="tirar-conteo">Descartar</button></div>` : ""}
+    </div>
+    <div class="bloque">
+      <h2>Sin código de barras</h2>
+      <p>Los concentrados de 60ml, el Tupperware y los catálogos no se escanean. Buscalos acá y agregalos al conteo a mano.</p>
+    </div>
+    ${barra("Buscar para agregar al conteo","conteo")}
+    ${paraSumar ? `<div class="lista">${paraSumar}</div>` : ""}
+    ${codigos.length ? `<div class="lista">${filas}</div>`
+      : `<div class="vacio"><b>Conteo vacío</b>Escaneá o buscá productos para empezar.</div>`}`;
+}
+
+function pantallaProductos() {
+  const sinNombre = productos.filter(p => p.nombre.startsWith(SIN_NOMBRE)).length;
+  const filas = visibles().map(p => `
+    <div class="fila">
+      <div class="fila-txt">${nom(p)}
+        <div class="fila-meta">${p.codigo} · ${plata(p.precio)} · costo ${plata(p.costo)}</div></div>
+      <div class="${claseChip(p.stock)}">${p.stock}</div>
+      <button class="mini" data-editar="${p.codigo}" aria-label="Editar">✎</button>
+    </div>`).join("");
+  return (sinNombre ? `<div class="bloque">
+      <h2>${sinNombre} sin nombre</h2>
+      <p>Salieron de escaneos. Lo más cómodo es exportar el CSV, completarlos en la PC y volver a importar.</p>
+      <div class="btns"><button class="btn" id="exportar">Bajar inventario</button></div>
+    </div>` : "") +
+    barra("Buscar producto","vender") +
+    `<div class="lista">${filas || '<div class="vacio"><b>Sin productos</b>Importá el CSV o contá escaneando.</div>'}</div>`;
+}
+
+function pantallaCsv() {
+  let previa = "";
+  if (previaCsv) {
+    const p = previaCsv;
+    const muestra = p.nuevos.concat(p.cambios).slice(0,40).map(t => {
+      const esNuevo = !t.viejo;
+      const dStock = t.stockCsv === null ? "—"
+        : (esNuevo ? t.stockCsv : `${t.stockViejo} → ${t.stockCsv}`);
+      const dPrecio = esNuevo ? plata(t.fila.precio)
+        : (Number(t.viejo.precio) !== t.fila.precio
+            ? `${plata(t.viejo.precio)} → ${plata(t.fila.precio)}` : plata(t.fila.precio));
+      return `<tr><td>${esNuevo?"nuevo":"cambia"}</td><td>${t.fila.nombre}</td>
+        <td class="${esNuevo?"":"d"}">${dPrecio}</td><td class="${esNuevo?"":"d"}">${dStock}</td></tr>`;
+    }).join("");
+    previa = `<div class="previa">
+      <div class="cuenta">
+        <span class="nuevo">${p.nuevos.length} nuevos</span>
+        <span class="cambio">${p.cambios.length} con cambios</span>
+        <span>${p.iguales.length} sin cambios</span>
+        ${p.rotos.length ? `<span class="malo">${p.rotos.length} con error</span>` : ""}
+      </div>
+      ${p.rotos.length ? `<p>Se saltean las lineas: ${p.rotos.map(r=>r.linea+" ("+r.motivo+")").join(", ")}</p>` : ""}
+      <div class="tabla"><table>
+        <thead><tr><th></th><th>Producto</th><th>Precio</th><th>Stock</th></tr></thead>
+        <tbody>${muestra || '<tr><td colspan="4">Nada para aplicar</td></tr>'}</tbody></table></div>
+      <div class="btns" style="margin-top:12px">
+        <button class="btn acc" id="aplicar" ${p.nuevos.length+p.cambios.length?"":"disabled"}>Aplicar cambios</button>
+        <button class="btn sec" id="cancelar">Cancelar</button>
+      </div></div>`;
+  }
+  const rubros = [...new Set(productos.map(p => p.rubro).filter(Boolean))];
+  return `
+  <div class="bloque">
+    <h2>Cargar planilla</h2>
+    <p>Te muestro qué va a cambiar antes de tocar nada. El código decide si el producto se crea o se actualiza.</p>
+    <div class="btns">
+      <label class="btn acc" for="archivo">Elegir archivo CSV</label>
+      <input id="archivo" type="file" accept=".csv,text/csv" hidden>
+    </div>${previa}
+  </div>
+  <div class="bloque">
+    <h2>Exportar</h2>
+    <p>Todo el inventario, listo para completar nombres y precios en la PC.</p>
+    <div class="btns"><button class="btn" id="exportar">Bajar inventario</button></div>
+  </div>
+  <div class="bloque">
+    <h2>Ajustar precios</h2>
+    <p>Sube o baja por porcentaje. Poné un número negativo para bajar.</p>
+    <div class="campo"><label for="rubro">Rubro</label>
+      <select id="rubro"><option value="">Todos</option>
+        ${rubros.map(r => `<option value="${r}">${r}</option>`).join("")}</select></div>
+    <div class="campo"><label for="pct">Porcentaje</label>
+      <input id="pct" type="number" inputmode="decimal" placeholder="15" step="0.5"></div>
+    <div class="btns"><button class="btn" id="verAjuste">Ver qué cambia</button></div>
+  </div>`;
+}
+
+/* =====================================================================
+   6. DIBUJAR
+   ===================================================================== */
+const VISTAS = [["vender","Vender"],["recibir","Recibir"],["conteo","Conteo"],
+                ["productos","Productos"],["csv","CSV"]];
+
+function pintar() {
+  const foco = document.activeElement && document.activeElement.id === "q";
+  const pos = foco ? document.getElementById("q").selectionStart : null;
+
+  document.getElementById("tabs").innerHTML = VISTAS.map(([v,t]) =>
+    `<button data-vista="${v}" aria-current="${v === vista}">${t}${
+      v === "conteo" && Object.keys(conteo).length ? '<span class="punto"></span>' : ""}</button>`).join("");
+
+  app.innerHTML = vista === "vender" ? pantallaVender()
+                : vista === "recibir" ? pantallaRecibir()
+                : vista === "conteo" ? pantallaConteo()
+                : vista === "productos" ? pantallaProductos()
+                : pantallaCsv();
+
+  document.getElementById("n-prod").textContent = productos.length;
+  document.getElementById("n-unid").textContent =
+    productos.reduce((a,p) => a + (p.stock > 0 ? p.stock : 0), 0);
+
+  if (foco) {
+    const q = document.getElementById("q");
+    if (q) { q.focus(); q.setSelectionRange(pos, pos); }
+  }
+}
+
+async function refrescarHoy() {
+  try { document.getElementById("n-hoy").textContent = await ventasDeHoy(); }
+  catch { document.getElementById("n-hoy").textContent = "—"; }
+}
+
+let temporizador;
+function avisar(texto, accion) {
+  document.querySelectorAll(".toast").forEach(t => t.remove());
+  const t = document.createElement("div");
+  t.className = "toast" + (accion === "error" ? " err" : "");
+  t.innerHTML = `<span>${texto}</span>` +
+    (accion && accion !== "error" ? `<button id="deshacer">Deshacer</button>` : "");
+  document.body.appendChild(t);
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => t.remove(), accion === "error" ? 7000 : 5000);
+}
+
+/* =====================================================================
+   7. EVENTOS
+   ===================================================================== */
+document.getElementById("tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[data-vista]");
+  if (!b) return;
+  vista = b.dataset.vista; filtro = ""; cerrarConteo = false;
+  pintar(); window.scrollTo(0,0);
+});
+
+document.addEventListener("input", e => {
+  if (e.target.id === "q") { filtro = e.target.value; pintar(); return; }
+  const c = e.target.dataset && e.target.dataset.conteo;
+  if (c) {
+    const n = Number(e.target.value);
+    if (e.target.value === "") return;
+    if (n <= 0) delete conteo[c]; else conteo[c] = n;
+    guardarConteo();
+  }
+});
+
+document.addEventListener("click", async e => {
+  const t = e.target;
+
+  if (t.id === "cerrar-esc" || t.closest("#cerrar-esc")) {
+    const modo = modoEsc;
+    cerrarEscaner(); await cargar();
+    if (modo === "conteo") { vista = "conteo"; cerrarConteo = false; }
+    pintar(); refrescarHoy(); return;
+  }
+
+  const modo = t.closest("[data-escanear]")?.dataset.escanear;
+  if (modo) { abrirEscaner(modo); return; }
+
+  if (t.id === "deshacer" && ultimoMov) {
+    const id = ultimoMov; ultimoMov = null;
+    try { await borrarMovimiento(id); await cargar(); pintar(); refrescarHoy(); avisar("Deshecho"); }
+    catch (err) { avisar("No se pudo deshacer: " + err.message, "error"); }
+    return;
+  }
+
+  const cv = t.closest("[data-vender]")?.dataset.vender;
+  if (cv) {
+    const p = porCodigo(cv);
+    try {
+      const m = await nuevoMovimiento(cv, "venta", -1, null);
+      ultimoMov = m.id;
+      await cargar(); pintar(); refrescarHoy();
+      avisar(`${p.nombre} · ${plata(p.precio)}`, "deshacer");
+    } catch (err) { avisar("No se registró la venta: " + err.message, "error"); }
+    return;
+  }
+
+  const sumar = t.closest("[data-sumar]")?.dataset.sumar;
+  const restar = t.closest("[data-restar]")?.dataset.restar;
+  if (sumar || restar) {
+    const c = sumar || restar;
+    try {
+      const m = await nuevoMovimiento(c, sumar ? "ingreso" : "ajuste", sumar ? 1 : -1, "a mano");
+      ultimoMov = m.id;
+      await cargar(); pintar();
+    } catch (err) { avisar("No se pudo guardar: " + err.message, "error"); }
+    return;
+  }
+
+  /* ---------- conteo ---------- */
+  const agr = t.closest("[data-agregar-conteo]")?.dataset.agregarConteo;
+  if (agr) { conteo[agr] = (conteo[agr] || 0) + 1; guardarConteo(); pintar(); return; }
+
+  const qui = t.closest("[data-quitar-conteo]")?.dataset.quitarConteo;
+  if (qui) { delete conteo[qui]; guardarConteo(); pintar(); return; }
+
+  if (t.id === "ver-conteo") { cerrarConteo = true; pintar(); window.scrollTo(0,0); return; }
+  if (t.id === "volver-conteo") { cerrarConteo = false; pintar(); return; }
+
+  if (t.id === "tirar-conteo") {
+    if (!confirm("¿Descartar el conteo? Se pierde todo lo escaneado.")) return;
+    limpiarConteo(); cerrarConteo = false; pintar(); avisar("Conteo descartado"); return;
+  }
+
+  if (t.id === "aplicar-conteo") {
+    t.disabled = true; t.textContent = "Aplicando…";
+    let n = 0;
+    try {
+      for (const p of productos) {
+        const c = conteo[p.codigo];
+        if (c === undefined && !ponerCeroNoContado) continue;
+        const delta = (c === undefined ? 0 : c) - p.stock;
+        if (delta === 0) continue;
+        await nuevoMovimiento(p.codigo, "ajuste", delta,
+          "conteo " + new Date().toISOString().slice(0,10));
+        n++;
+      }
+      limpiarConteo(); cerrarConteo = false;
+      await cargar(); pintar();
+      avisar(`${n} productos ajustados por conteo`);
+    } catch (err) { pintar(); avisar("Falló el ajuste: " + err.message, "error"); }
+    return;
+  }
+
+  const ed = t.closest("[data-editar]")?.dataset.editar;
+  if (ed) {
+    const p = porCodigo(ed);
+    const nombre = prompt("Nombre", p.nombre.startsWith(SIN_NOMBRE) ? "" : p.nombre);
+    if (nombre === null) return;
+    const precio = Number(prompt("Precio de venta", p.precio));
+    const alt = prompt("Segundo código de barras (vacío si no hay)", p.ean_alt || "");
+    try {
+      await guardarProductos([{...quitarStock(p), nombre: nombre.trim() || p.nombre,
+        precio: isNaN(precio) ? p.precio : precio, ean_alt: (alt||"").trim() || null}]);
+      await cargar(); pintar(); avisar("Producto actualizado");
+    } catch (err) { avisar("No se pudo guardar: " + err.message, "error"); }
+    return;
+  }
+
+  if (t.id === "exportar") {
+    bajarArchivo(`inventario-${new Date().toISOString().slice(0,10)}.csv`, armarCsv(productos));
+    return;
+  }
+  if (t.id === "cancelar") { previaCsv = null; pintar(); return; }
+
+  if (t.id === "aplicar") {
+    t.disabled = true; t.textContent = "Aplicando…";
+    try {
+      const n = await aplicarCsv(previaCsv);
+      previaCsv = null; await cargar(); pintar(); avisar(`${n} productos actualizados`);
+    } catch (err) { pintar(); avisar("Falló la carga: " + err.message, "error"); }
+    return;
+  }
+
+  if (t.id === "verAjuste") {
+    const pct = Number(document.getElementById("pct").value);
+    const rubro = document.getElementById("rubro").value;
+    if (!pct) { avisar("Poné un porcentaje distinto de cero", "error"); return; }
+    const afectados = productos.filter(p => !rubro || p.rubro === rubro);
+    if (!afectados.length) { avisar("No hay productos en ese rubro", "error"); return; }
+    previaCsv = {nuevos: [], iguales: [], rotos: [], cambios: afectados.map(p => ({
+      fila: {...quitarStock(p), precio: Math.round(Number(p.precio) * (1 + pct/100))},
+      stockCsv: null, stockViejo: p.stock, viejo: p}))};
+    pintar();
+    document.querySelector(".previa")?.scrollIntoView({behavior:"smooth", block:"center"});
+    return;
+  }
+});
+
+function quitarStock(p) { const {stock, ...resto} = p; return resto; }
+
+document.addEventListener("change", e => {
+  if (e.target.id === "cero") { ponerCeroNoContado = e.target.checked; pintar(); return; }
+  if (e.target.id !== "archivo") return;
+  const f = e.target.files[0];
+  if (!f) return;
+  const lector = new FileReader();
+  lector.onload = () => {
+    try {
+      const filas = leerCsv(lector.result);
+      if (!filas.length) { avisar("El archivo no tiene filas", "error"); return; }
+      if (!("codigo" in filas[0]) && !("sku" in filas[0]) && !("ean" in filas[0])) {
+        avisar("Falta la columna codigo", "error"); return;
+      }
+      previaCsv = compararCsv(filas);
+      pintar();
+      document.querySelector(".previa")?.scrollIntoView({behavior:"smooth", block:"center"});
+    } catch (err) { avisar("No se pudo leer el CSV: " + err.message, "error"); }
+  };
+  lector.readAsText(f, "utf-8");
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && capa) cerrarEscaner();
+});
+
+/* =====================================================================
+   8. ARRANQUE
+   ===================================================================== */
+(async function () {
+  recuperarConteo();
+  const estado = document.getElementById("estado");
+  const aviso = document.getElementById("aviso");
+  const notas = [];
+  if (!CONECTADO) {
+    estado.textContent = "datos de prueba";
+    notas.push("Datos de prueba. Completá <code>SUPABASE_URL</code> y <code>SUPABASE_KEY</code> arriba de todo en este archivo.");
+  }
+  if (!HAY_ESCANER)
+    notas.push("Este navegador no puede escanear códigos de barras. Usá Chrome en Android.");
+  if (notas.length) { aviso.hidden = false; aviso.innerHTML = notas.join("<br>"); }
+
+  try {
+    await cargar();
+    if (CONECTADO) { estado.textContent = "conectado"; estado.classList.add("vivo"); }
+    pintar(); refrescarHoy();
+  } catch (err) {
+    estado.textContent = "sin conexión"; pintar();
+    avisar("No se pudo conectar con Supabase: " + err.message, "error");
+  }
+})();
+</script>
+</body>
+</html>
