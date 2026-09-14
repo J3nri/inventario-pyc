@@ -12,7 +12,7 @@
 :root{
   --ink:#17202E; --ink-soft:#5B6878; --paper:#FFF; --surface:#EDF0F3;
   --line:#D5DCE3; --accent:#B3005E; --accent-dark:#8C0049;
-  --ok:#0E7C5A; --warn:#B4530A; --radius:10px; --tabbar:58px;
+  --ok:#0E7C5A; --warn:#B4530A; --radius:10px; --tabbar:60px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -39,27 +39,30 @@ button{cursor:pointer;border:none;background:none}
 .aviso code{font-family:ui-monospace,monospace;font-size:12.5px}
 
 .barra{display:flex;gap:8px;padding:12px 12px 8px}
-.barra input{flex:1;min-width:0;padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper)}
+.barra input{
+  flex:1;min-width:0;padding:13px 14px;border:1.5px solid var(--line);
+  border-radius:var(--radius);background:var(--paper);
+}
 .barra input::placeholder{color:#9AA7B4}
-.escanear{flex:none;width:56px;border-radius:var(--radius);background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center}
+.escanear{
+  flex:none;width:56px;border-radius:var(--radius);background:var(--ink);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+}
 .escanear svg{width:26px;height:26px}
 
 .lista{padding:0 12px 20px;display:flex;flex-direction:column;gap:7px}
 .fila{display:flex;align-items:center;gap:11px;background:var(--paper);border-radius:var(--radius);padding:11px 11px 11px 14px}
 .fila-txt{flex:1;min-width:0}
 .fila-nom{font-family:'Barlow Semi Condensed';font-weight:600;font-size:17.5px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fila-nom.sn{color:var(--warn)}
 .fila-meta{font-size:12.5px;color:var(--ink-soft);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fila-precio{font-weight:600;white-space:nowrap}
 .chip{min-width:42px;text-align:center;padding:4px 8px;border-radius:7px;font-family:'Barlow Semi Condensed';font-weight:700;font-size:16px;background:var(--surface)}
 .chip.cero{background:#FDE2E2;color:#A31212}
 .chip.poco{background:#FFF0D6;color:var(--warn)}
-.chip.ok{background:#DCF3E9;color:var(--ok)}
 .vender{width:58px;height:50px;border-radius:var(--radius);background:var(--accent);color:#fff;font-family:'Barlow Semi Condensed';font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex:none}
 .vender:active{background:var(--accent-dark)}
 .vender[disabled]{background:#C9D1D9;color:#7A8794}
 .mini{width:38px;height:38px;border-radius:8px;background:var(--surface);font-weight:700;font-size:18px;flex:none}
-.cant{width:56px;padding:9px 6px;text-align:center;border:1.5px solid var(--line);border-radius:8px;font-weight:600;flex:none}
 
 .vacio{padding:40px 24px;text-align:center;color:var(--ink-soft)}
 .vacio b{display:block;font-family:'Barlow Semi Condensed';font-size:19px;color:var(--ink);margin-bottom:4px}
@@ -76,27 +79,21 @@ button{cursor:pointer;border:none;background:none}
 .campo{display:flex;gap:8px;align-items:center;margin-bottom:10px}
 .campo input,.campo select{flex:1;padding:11px 12px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper);min-width:0}
 .campo label{font-size:14px;color:var(--ink-soft);flex:none;width:88px}
-.check{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;margin-bottom:12px;cursor:pointer}
-.check input{width:22px;height:22px;flex:none;margin-top:1px;accent-color:var(--accent)}
 
 .previa{margin-top:14px;border-top:1px solid var(--line);padding-top:14px}
 .cuenta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .cuenta span{padding:5px 10px;border-radius:7px;background:var(--surface);font-size:13.5px;font-weight:600}
 .cuenta .nuevo{background:#DCF3E9;color:var(--ok)}
 .cuenta .cambio{background:#FFF0D6;color:var(--warn)}
-.cuenta .malo{background:#FDE2E2;color:#A31212}
-.tabla{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.tabla{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px}
 .tabla table{width:100%;border-collapse:collapse;font-size:13.5px}
 .tabla th{position:sticky;top:0;background:var(--surface);text-align:left;padding:8px 10px;font-weight:600;font-size:12.5px;color:var(--ink-soft)}
 .tabla td{padding:8px 10px;border-top:1px solid var(--line)}
 .tabla .d{color:var(--warn);font-weight:600}
-.tabla .falta{color:#A31212;font-weight:600}
-.tabla .sobra{color:var(--ok);font-weight:600}
 
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;background:var(--paper);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-.tabs button{flex:1;height:var(--tabbar);font-family:'Barlow Semi Condensed';font-weight:600;font-size:13.5px;color:var(--ink-soft);border-top:3px solid transparent;padding:0 2px}
+.tabs button{flex:1;height:var(--tabbar);font-family:'Barlow Semi Condensed';font-weight:600;font-size:15px;color:var(--ink-soft);border-top:3px solid transparent}
 .tabs button[aria-current="true"]{color:var(--accent);border-top-color:var(--accent)}
-.tabs .punto{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);vertical-align:middle;margin-left:3px}
 
 .toast{position:fixed;left:12px;right:12px;bottom:calc(var(--tabbar) + 12px + env(safe-area-inset-bottom));z-index:60;background:var(--ink);color:#fff;border-radius:var(--radius);padding:13px 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14.5px}
 .toast button{color:#7FE3BC;font-weight:700;white-space:nowrap}
@@ -107,6 +104,7 @@ button{cursor:pointer;border:none;background:none}
   @keyframes sube{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
 }
 
+/* ---------- escaner ---------- */
 .escaner{position:fixed;inset:0;z-index:70;background:#000;display:flex;flex-direction:column}
 .escaner video{flex:1;width:100%;object-fit:cover;min-height:0}
 .mira{position:absolute;left:10%;right:10%;top:50%;height:150px;transform:translateY(-50%);border:2px solid rgba(255,255,255,.85);border-radius:12px;box-shadow:0 0 0 100vmax rgba(0,0,0,.45)}
@@ -114,16 +112,67 @@ button{cursor:pointer;border:none;background:none}
 .esc-top b{font-family:'Barlow Semi Condensed';font-weight:700;font-size:18px}
 .esc-top button{color:#fff;font-size:16px;font-weight:600;padding:6px 10px}
 .esc-pie{position:absolute;bottom:0;left:0;right:0;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom));color:#fff;text-align:center;font-size:14.5px;z-index:2}
-.esc-cont{font-family:'Barlow Semi Condensed';font-weight:700;font-size:26px;display:block}
 .alta{position:absolute;inset:auto 0 0 0;z-index:3;background:var(--paper);border-radius:16px 16px 0 0;padding:18px 16px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
 .alta h3{font-family:'Barlow Semi Condensed';font-weight:700;font-size:19px;margin-bottom:2px}
 .alta p{font-size:13.5px;color:var(--ink-soft);margin-bottom:14px}
 .alta code{font-family:ui-monospace,monospace}
 
+/* ---------- confirmacion de lectura ---------- */
+.destello{position:absolute;inset:0;z-index:4;pointer-events:none;background:#22C55E;animation:flash .28s ease-out forwards}
+.destello.mal{background:#EF4444}
+.destello.nuevo{background:#F59E0B}
+@keyframes flash{from{opacity:.6}to{opacity:0}}
+.mira.ok{border-color:#4ADE80}
+.mira.mal{border-color:#F87171}
+.mira.nuevo{border-color:#FBBF24}
+.esc-cuenta{font-size:12.5px;color:#B9C6D6;margin-top:1px;font-weight:500}
+.esc-top .der{display:flex;gap:6px;align-items:center;flex:none}
+.esc-top .sw{font-size:13px;font-weight:600;padding:7px 9px;border-radius:8px;background:rgba(255,255,255,.15);color:#fff}
+.esc-top .sw.off{opacity:.45;text-decoration:line-through}
+.tarjeta{position:absolute;inset:auto 0 0 0;z-index:5;background:var(--paper);border-radius:16px 16px 0 0;padding:18px 16px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.tarjeta.mal{background:#FFE9E9}
+.tarjeta h3{font-family:'Barlow Semi Condensed';font-weight:700;font-size:23px;line-height:1.15}
+.tarjeta .linea{font-size:16px;color:var(--ink-soft);margin:5px 0 15px}
+.tarjeta .linea b{color:var(--ink);font-weight:600}
+.tarjeta .btns{margin-top:8px}
+.tarjeta .btns .btn{flex:1;text-align:center;padding:12px 8px}
+@media (prefers-reduced-motion:reduce){
+  .destello{animation:none;opacity:0}
+}
+.esc-compra{font-size:13px;color:#FBCFE8;font-weight:600;margin-top:1px}
+
+/* ---------- proveedor ---------- */
+.fila-prov{font-size:12.5px;color:var(--ink-soft);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fila-prov b{color:var(--accent);font-weight:600}
+.fila-prov.sin{color:#9AA7B4}
+.compra{border-left:3px solid var(--accent);padding-left:12px;margin:4px 0 14px}
+.compra .campo:last-child{margin-bottom:0}
+.nota{font-size:13px;color:var(--warn);margin:-4px 0 12px}
+
+/* ---------- ficha de producto ---------- */
+.fondo{position:fixed;inset:0;z-index:50;background:rgba(23,32,46,.55);display:flex;align-items:flex-end;justify-content:center}
+.hoja{background:var(--paper);width:100%;max-width:760px;max-height:90vh;overflow:auto;border-radius:16px 16px 0 0;padding:18px 16px;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.hoja-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+.hoja-cab h3{font-family:'Barlow Semi Condensed';font-weight:700;font-size:21px;line-height:1.15}
+.hoja-sub{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.cerrar-x{font-size:20px;width:40px;height:40px;border-radius:8px;background:var(--surface);flex:none}
+.donde{background:#FBEAF3;border-radius:var(--radius);padding:13px 14px;margin-bottom:16px}
+.donde .quien{font-family:'Barlow Semi Condensed';font-weight:700;font-size:22px;line-height:1.15;color:var(--accent-dark)}
+.donde .calle{font-size:15px;margin-top:1px}
+.donde .cuando{font-size:13px;color:var(--ink-soft);margin-top:5px}
+.donde.vacia{background:var(--surface)}
+.donde.vacia .quien{font-size:17px;color:var(--ink-soft)}
+.hoja h4{font-family:'Barlow Semi Condensed';font-weight:700;font-size:17px;margin:20px 0 6px}
+.hist-fila{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.hist-fila span:first-child{min-width:0}
+.hist-fila small{display:block;color:var(--ink-soft);font-size:12.5px}
+.hist-fila span:last-child{text-align:right;white-space:nowrap}
+.anotar{display:flex;gap:8px;margin-top:12px}
+.anotar select{flex:1;min-width:0;padding:11px 12px;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper)}
+
 @media (min-width:760px){
   body{padding-bottom:0}
   .tabs{position:static;border-top:none;border-bottom:1px solid var(--line)}
-  .tabs button{font-size:15px}
   .lista,.bloque,.barra{max-width:760px;margin-left:auto;margin-right:auto}
 }
 </style>
@@ -144,38 +193,60 @@ button{cursor:pointer;border:none;background:none}
 
 <div class="aviso" id="aviso" hidden></div>
 
-<nav class="tabs" id="tabs"></nav>
+<nav class="tabs">
+  <button data-vista="vender" aria-current="true">Vender</button>
+  <button data-vista="recibir">Recibir</button>
+  <button data-vista="productos">Productos</button>
+  <button data-vista="csv">CSV</button>
+</nav>
+
 <main id="app"></main>
 
 <script>
 /* =====================================================================
    1. CONFIGURACION
-   Supabase > boton Connect (o Settings > API Keys)
-   Sirve la clave nueva sb_publishable_... o la vieja anon.
-   NUNCA pongas aca una clave sb_secret_... ni la service_role.
+   Project Settings > API en Supabase.
+   Vacio = datos de prueba en memoria.
    ===================================================================== */
 const SUPABASE_URL = "";
-const SUPABASE_KEY = "";
+const SUPABASE_ANON_KEY = "";
 /* ===================================================================== */
 
-const CONECTADO = Boolean(SUPABASE_URL && SUPABASE_KEY);
-const ES_JWT = SUPABASE_KEY.startsWith("eyJ");
+const CONECTADO = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+// columnas del CSV exportado
 const COLUMNAS = ["codigo","ean_alt","nombre","rubro","subrubro","precio","costo",
-                  "stock","descripcion","foto_url_1","foto_url_2","foto_url_3","activo"];
-const SIN_NOMBRE = "Sin nombre ";
+                  "stock","descripcion","foto_url_1","foto_url_2","foto_url_3","activo",
+                  "ultimo_proveedor"];
+// columnas reales de la tabla productos (lo demas lo calcula la vista)
+const CAMPOS_PROD = ["codigo","ean_alt","nombre","rubro","subrubro","precio","costo",
+                     "descripcion","foto_url_1","foto_url_2","foto_url_3","activo"];
 
-let productos = [], vista = "vender", filtro = "";
-let previaCsv = null, ultimoMov = null;
-let conteo = {}, cerrarConteo = false, ponerCeroNoContado = false;
+let productos = [], proveedores = [], vista = "vender", filtro = "";
+let previaCsv = null, previaCompra = null, ultimoMov = null;
+// la compra que estas cargando: la usan Recibir y el ingreso por CSV
+// proveedor_id: "" = sin elegir, "0" = sin proveedor, o el id
+let compra = {proveedor_id: "", comprobante: ""};
 
-let demoProd = [
-  {codigo:"6295514063724",ean_alt:null,nombre:"Tubito 35ml ZMA9898-172",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,stock:2},
-  {codigo:"6295514063151",ean_alt:null,nombre:"Tubito 35ml ZMA9898-115",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,stock:2},
-  {codigo:"6944348570723",ean_alt:null,nombre:"HONEY SQUEEZE VL9052-S1-02",rubro:"Perfumeria",subrubro:"Mini perfumes",precio:14000,costo:6300,activo:true,stock:1},
-  {codigo:"CON-060-001",ean_alt:null,nombre:"Concentrado 60ml Asad",rubro:"Perfumeria",subrubro:"Concentrados 60ml",precio:15000,costo:0,activo:true,stock:4},
-  {codigo:"TUP-001",ean_alt:null,nombre:"Tupperware remanente",rubro:"Tupperware",subrubro:"",precio:12000,costo:0,activo:true,stock:0}
+let demoProv = [
+  {id:1, nombre:"Glowia", direccion:"Bartolomé Mitre 2564"},
+  {id:2, nombre:"Magic Girl", direccion:"Tte. Gral. Juan Domingo Perón 2659"}
 ];
-let demoMov = [], demoId = 1;
+let demoProvId = 3;
+let demoProd = [
+  {codigo:"6295514063724",ean_alt:null,nombre:"Tubito 35ml ZMA9898-172",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,creado_en:"2026-09-03T15:00:00Z"},
+  {codigo:"6295514063151",ean_alt:null,nombre:"Tubito 35ml ZMA9898-115",rubro:"Perfumeria",subrubro:"Tubitos",precio:6000,costo:1600,activo:true,creado_en:"2026-09-03T15:00:00Z"},
+  {codigo:"6944348570723",ean_alt:null,nombre:"HONEY SQUEEZE VL9052-S1-02",rubro:"Perfumeria",subrubro:"Mini perfumes",precio:14000,costo:6300,activo:true,creado_en:"2026-09-03T15:00:00Z"},
+  {codigo:"6978236675696",ean_alt:null,nombre:"Body Splash Le Male",rubro:"Body splash",subrubro:"G5 de VS",precio:13000,costo:6000,activo:true,creado_en:"2026-08-28T15:00:00Z"},
+  {codigo:"TUP-001",ean_alt:null,nombre:"Tupperware remanente",rubro:"Tupperware",subrubro:"",precio:12000,costo:0,activo:true,creado_en:"2026-08-01T15:00:00Z"}
+];
+let demoMov = [
+  {id:1,codigo:"6295514063724",tipo:"ingreso",cantidad:2,nota:"ticket CSV",proveedor_id:1,comprobante:"10156088",costo_unit:1600,creado_en:"2026-09-03T15:00:00Z"},
+  {id:2,codigo:"6295514063151",tipo:"ingreso",cantidad:2,nota:"ticket CSV",proveedor_id:1,comprobante:"10156088",costo_unit:1600,creado_en:"2026-09-03T15:00:00Z"},
+  {id:3,codigo:"6944348570723",tipo:"ingreso",cantidad:1,nota:"ticket CSV",proveedor_id:1,comprobante:"10156088",costo_unit:6300,creado_en:"2026-09-03T15:00:00Z"},
+  {id:4,codigo:"6978236675696",tipo:"ingreso",cantidad:1,nota:"escaneado",proveedor_id:1,comprobante:null,costo_unit:6400,creado_en:"2026-08-14T15:00:00Z"},
+  {id:5,codigo:"6978236675696",tipo:"ingreso",cantidad:2,nota:"escaneado",proveedor_id:2,comprobante:null,costo_unit:6000,creado_en:"2026-08-28T15:00:00Z"}
+];
+let demoId = 6;
 
 /* =====================================================================
    2. DATOS
@@ -184,8 +255,8 @@ async function api(ruta, opciones = {}) {
   const r = await fetch(SUPABASE_URL + "/rest/v1/" + ruta, {
     ...opciones,
     headers: {
-      apikey: SUPABASE_KEY,
-      ...(ES_JWT ? {Authorization: "Bearer " + SUPABASE_KEY} : {}),
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY,
       "Content-Type": "application/json",
       ...(opciones.headers || {})
     }
@@ -195,18 +266,63 @@ async function api(ruta, opciones = {}) {
   return txt ? JSON.parse(txt) : null;
 }
 
+// Imita la vista v_stock para el modo de prueba
+function vistaDemo() {
+  const nombreProv = id => (demoProv.find(x => x.id === id) || {}).nombre;
+  return demoProd.map(p => {
+    const movs = demoMov.filter(m => m.codigo === p.codigo);
+    const compras = movs.filter(m => m.tipo === "ingreso" && m.proveedor_id)
+      .sort((a,b) => b.creado_en.localeCompare(a.creado_en) || b.id - a.id);
+    const u = compras[0];
+    return {...p,
+      stock: movs.reduce((a,m) => a + m.cantidad, 0),
+      ultimo_proveedor_id: u ? u.proveedor_id : null,
+      ultimo_proveedor: u ? nombreProv(u.proveedor_id) : null,
+      ultima_compra: u ? u.creado_en : null,
+      ultimo_costo: u ? u.costo_unit : null,
+      ultimo_comprobante: u ? u.comprobante : null,
+      ultima_cantidad: u ? u.cantidad : null,
+      proveedores_todos: [...new Set(compras.map(m => nombreProv(m.proveedor_id)))].join(", ") || null
+    };
+  }).sort((a,b) => a.nombre.localeCompare(b.nombre));
+}
+
 async function cargar() {
-  if (!CONECTADO) { productos = demoProd.map(p => ({...p})); return; }
+  if (!CONECTADO) { productos = vistaDemo(); return; }
   productos = await api("v_stock?select=*&order=nombre.asc");
 }
 
-async function nuevoMovimiento(codigo, tipo, cantidad, nota) {
-  const fila = {codigo, tipo, cantidad, nota: nota || null};
+async function cargarProveedores() {
+  if (!CONECTADO) { proveedores = demoProv.map(p => ({...p})); return; }
+  proveedores = await api("proveedores?select=*&order=nombre.asc");
+}
+
+async function crearProveedor() {
+  const nombre = (prompt("Nombre del proveedor") || "").trim();
+  if (!nombre) return null;
+  const ya = proveedores.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
+  if (ya) return ya;
+  const direccion = (prompt("Dirección o cómo llegar (podés dejarlo vacío)") || "").trim() || null;
   if (!CONECTADO) {
-    const m = {...fila, id: demoId++, creado_en: new Date().toISOString()};
+    const pr = {id: demoProvId++, nombre, direccion};
+    demoProv.push(pr); await cargarProveedores();
+    return pr;
+  }
+  const r = await api("proveedores", {
+    method: "POST", headers: {Prefer: "return=representation"},
+    body: JSON.stringify({nombre, direccion})
+  });
+  await cargarProveedores();
+  return r[0];
+}
+
+// extra: {proveedor_id, comprobante, costo_unit} solo en los ingresos
+async function nuevoMovimiento(codigo, tipo, cantidad, nota, extra) {
+  const fila = {codigo, tipo, cantidad, nota: nota || null, ...(extra || {})};
+  if (!CONECTADO) {
+    const m = {proveedor_id: null, comprobante: null, costo_unit: null,
+               ...fila, id: demoId++, creado_en: new Date().toISOString()};
     demoMov.push(m);
-    const p = demoProd.find(x => x.codigo === codigo);
-    if (p) p.stock += cantidad;
     return m;
   }
   const r = await api("movimientos", {
@@ -216,16 +332,66 @@ async function nuevoMovimiento(codigo, tipo, cantidad, nota) {
   return r[0];
 }
 
+// varios de una sola vez (carga de ticket)
+async function nuevosMovimientos(filas) {
+  if (!filas.length) return;
+  if (!CONECTADO) {
+    filas.forEach(f => demoMov.push({...f, id: demoId++, creado_en: new Date().toISOString()}));
+    return;
+  }
+  await api("movimientos", {method: "POST", body: JSON.stringify(filas)});
+}
+
 async function borrarMovimiento(id) {
   if (!CONECTADO) {
     const i = demoMov.findIndex(m => m.id === id);
-    if (i < 0) return;
-    const p = demoProd.find(x => x.codigo === demoMov[i].codigo);
-    if (p) p.stock -= demoMov[i].cantidad;
-    demoMov.splice(i, 1);
+    if (i >= 0) demoMov.splice(i, 1);
     return;
   }
   await api("movimientos?id=eq." + id, {method: "DELETE"});
+}
+
+// todas las entradas de un producto, la mas nueva primero
+async function historialCompras(codigo) {
+  if (!CONECTADO) {
+    return demoMov.filter(m => m.codigo === codigo && m.tipo === "ingreso")
+      .sort((a,b) => b.creado_en.localeCompare(a.creado_en) || b.id - a.id)
+      .map(m => ({...m, proveedores: demoProv.find(x => x.id === m.proveedor_id) || null}));
+  }
+  return api("movimientos?select=id,creado_en,cantidad,costo_unit,comprobante,nota,proveedores(nombre,direccion)" +
+    "&codigo=eq." + encodeURIComponent(codigo) + "&tipo=eq.ingreso&order=creado_en.desc,id.desc&limit=40");
+}
+
+// devuelve la fecha si ese ticket de ese proveedor ya se cargo
+async function ticketYaCargado(provId, comprobante) {
+  if (!provId || !comprobante) return null;
+  if (!CONECTADO) {
+    const m = demoMov.find(x => x.proveedor_id === provId && x.comprobante === comprobante);
+    return m ? m.creado_en : null;
+  }
+  const r = await api("movimientos?select=creado_en&proveedor_id=eq." + provId +
+    "&comprobante=eq." + encodeURIComponent(comprobante) + "&limit=1");
+  return r.length ? r[0].creado_en : null;
+}
+
+// arma los datos de compra para un ingreso
+function datosCompra(costo) {
+  const id = compra.proveedor_id;
+  return {
+    proveedor_id: id && id !== "0" ? Number(id) : null,
+    comprobante: compra.comprobante.trim() || null,
+    costo_unit: Number(costo) > 0 ? Number(costo) : null
+  };
+}
+const compraElegida = () => compra.proveedor_id !== "";
+function compraTexto() {
+  const pr = proveedores.find(p => String(p.id) === compra.proveedor_id);
+  const quien = pr ? pr.nombre : "Sin proveedor";
+  return quien + (compra.comprobante.trim() ? " · ticket " + compra.comprobante.trim() : "");
+}
+
+function soloProducto(p) {
+  return Object.fromEntries(CAMPOS_PROD.map(c => [c, p[c] === undefined ? null : p[c]]));
 }
 
 async function guardarProductos(filas) {
@@ -233,7 +399,7 @@ async function guardarProductos(filas) {
     filas.forEach(f => {
       const i = demoProd.findIndex(p => p.codigo === f.codigo);
       if (i >= 0) Object.assign(demoProd[i], f);
-      else demoProd.push({...f, stock: 0});
+      else demoProd.push({...f, creado_en: new Date().toISOString()});
     });
     return;
   }
@@ -254,21 +420,6 @@ async function ventasDeHoy() {
 
 function porCodigo(c) {
   return productos.find(p => p.codigo === c || (p.ean_alt && p.ean_alt === c));
-}
-
-/* ---------- conteo guardado en el celular ---------- */
-function guardarConteo() {
-  try { localStorage.setItem("pyc-conteo", JSON.stringify(conteo)); } catch (_) {}
-}
-function recuperarConteo() {
-  try {
-    const g = localStorage.getItem("pyc-conteo");
-    if (g) conteo = JSON.parse(g) || {};
-  } catch (_) { conteo = {}; }
-}
-function limpiarConteo() {
-  conteo = {};
-  try { localStorage.removeItem("pyc-conteo"); } catch (_) {}
 }
 
 /* =====================================================================
@@ -313,21 +464,14 @@ function bajarArchivo(nombre, contenido) {
 }
 
 function compararCsv(filasCsv) {
-  const idx = {}; productos.forEach(p => { idx[p.codigo] = p; });
+  const idx = {};
+  productos.forEach(p => { idx[p.codigo] = p; });
   const nuevos = [], cambios = [], iguales = [], rotos = [];
   filasCsv.forEach((f, i) => {
     const codigo = (f.codigo || f.sku || f.ean || "").trim();
     if (!codigo) { rotos.push({linea:i+2, motivo:"sin codigo"}); return; }
     if (!f.nombre) { rotos.push({linea:i+2, motivo:"sin nombre"}); return; }
-    const fila = {
-      codigo, ean_alt: f.ean_alt || null, nombre: f.nombre,
-      rubro: f.rubro || null, subrubro: f.subrubro || null,
-      precio: Number(f.precio || 0) || 0, costo: Number(f.costo || 0) || 0,
-      descripcion: f.descripcion || null,
-      foto_url_1: f.foto_url_1 || null, foto_url_2: f.foto_url_2 || null,
-      foto_url_3: f.foto_url_3 || null,
-      activo: !["0","false","no"].includes(String(f.activo).toLowerCase())
-    };
+    const fila = filaDesdeCsv(f, codigo);
     const stockCsv = f.stock === "" || f.stock === undefined ? null : Number(f.stock);
     const viejo = idx[codigo];
     if (!viejo) { nuevos.push({fila, stockCsv, stockViejo:0}); return; }
@@ -351,34 +495,176 @@ async function aplicarCsv(previa) {
   return todos.length;
 }
 
+function filaDesdeCsv(f, codigo) {
+  return {
+    codigo,
+    ean_alt: f.ean_alt || null,
+    nombre: f.nombre,
+    rubro: f.rubro || null,
+    subrubro: f.subrubro || null,
+    precio: Number(f.precio || 0) || 0,
+    costo: Number(f.costo || 0) || 0,
+    descripcion: f.descripcion || null,
+    foto_url_1: f.foto_url_1 || null,
+    foto_url_2: f.foto_url_2 || null,
+    foto_url_3: f.foto_url_3 || null,
+    activo: !["0","false","no"].includes(String(f.activo).toLowerCase())
+  };
+}
+
+/* ---------- ingreso de compra (ticket) ----------
+   A diferencia de la planilla, aca la cantidad SE SUMA al stock.
+   Los productos que ya existen no cambian nombre ni precio de venta:
+   solo se actualiza el costo si el ticket trae otro.                */
+function compararCompra(filasCsv) {
+  const idx = {};
+  productos.forEach(p => { idx[p.codigo] = p; if (p.ean_alt) idx[p.ean_alt] = p; });
+  const items = [], rotos = [], porClave = {};
+  let usoStock = false;
+  filasCsv.forEach((f, i) => {
+    const linea = i + 2;
+    const codigo = (f.codigo || f.sku || f.ean || "").trim();
+    if (!codigo) { rotos.push({linea, motivo:"sin código"}); return; }
+    let crudo = f.cantidad;
+    if ((crudo === undefined || crudo === "") && f.stock !== undefined && f.stock !== "") {
+      crudo = f.stock; usoStock = true;
+    }
+    const cantidad = Math.round(Number(crudo));
+    if (!(cantidad > 0)) { rotos.push({linea, motivo:"sin cantidad"}); return; }
+    const viejo = idx[codigo];
+    if (!viejo && !f.nombre) { rotos.push({linea, motivo:"código nuevo sin nombre"}); return; }
+    const clave = viejo ? viejo.codigo : codigo;
+    if (porClave[clave]) { porClave[clave].cantidad += cantidad; return; }  // repetido en el ticket
+    const item = {
+      codigo: clave, cantidad, viejo,
+      costo: Number(f.costo || 0) || 0,
+      nombre: viejo ? viejo.nombre : f.nombre,
+      fila: viejo ? null : filaDesdeCsv(f, codigo)
+    };
+    porClave[clave] = item; items.push(item);
+  });
+  return {items, rotos, usoStock};
+}
+
+async function aplicarCompra(previa) {
+  const extra = datosCompra(0);
+  const nuevos = previa.items.filter(t => !t.viejo).map(t => t.fila);
+  const costos = previa.items
+    .filter(t => t.viejo && t.costo && Number(t.viejo.costo) !== t.costo)
+    .map(t => ({...soloProducto(t.viejo), costo: t.costo}));
+  if (nuevos.length || costos.length) await guardarProductos(nuevos.concat(costos));
+  await nuevosMovimientos(previa.items.map(t => ({
+    codigo: t.codigo, tipo: "ingreso", cantidad: t.cantidad, nota: "ticket CSV",
+    proveedor_id: extra.proveedor_id, comprobante: extra.comprobante,
+    costo_unit: t.costo > 0 ? t.costo : null
+  })));
+  return previa.items.reduce((a, t) => a + t.cantidad, 0);
+}
+
 /* =====================================================================
    4. ESCANER
+   Regla: una lectura = una unidad. Apenas lee un codigo, la camara se
+   congela y no vuelve a leer hasta que toques "Seguir escaneando".
    ===================================================================== */
 const HAY_ESCANER = "BarcodeDetector" in window;
 let capa = null, video = null, flujo = null, detector = null;
-let modoEsc = "vender", ultimoCodigo = "", ultimoMomento = 0, corriendo = false;
-let escaneadosEnSesion = 0;
+let modoEsc = "vender", corriendo = false;
+let escaneados = 0, codigoBloqueado = "", vacios = 0;
+let conSonido = true, conVibrar = true;
 
+/* ---------- sonido ---------- */
+let audio = null;
+function prepararAudio() {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  if (!audio) audio = new AC();
+  if (audio.state === "suspended") audio.resume();
+}
+function pip(hz, largo, demora = 0, volumen = 0.2) {
+  if (!conSonido || !audio) return;
+  const t0 = audio.currentTime + demora;
+  const osc = audio.createOscillator(), gan = audio.createGain();
+  osc.type = "triangle";
+  osc.frequency.value = hz;
+  gan.gain.setValueAtTime(0.0001, t0);
+  gan.gain.exponentialRampToValueAtTime(volumen, t0 + 0.012);
+  gan.gain.exponentialRampToValueAtTime(0.0001, t0 + largo);
+  osc.connect(gan); gan.connect(audio.destination);
+  osc.start(t0); osc.stop(t0 + largo + 0.03);
+}
+const sonarOk    = () => pip(1760, 0.09);
+const sonarError = () => { pip(330, 0.15); pip(240, 0.22, 0.17); };
+const sonarNuevo = () => { pip(880, 0.10); pip(1320, 0.26, 0.12); };
+
+function vibrar(patron) { if (conVibrar && navigator.vibrate) navigator.vibrate(patron); }
+
+function destello(clase) {
+  if (!capa) return;
+  const d = document.createElement("div");
+  d.className = "destello" + (clase ? " " + clase : "");
+  capa.appendChild(d);
+  setTimeout(() => d.remove(), 300);
+}
+function pintarMira(clase) {
+  const m = capa && capa.querySelector(".mira");
+  if (m) m.className = "mira" + (clase ? " " + clase : "");
+}
+function avisarEnEscaner(txt) {
+  const m = capa && capa.querySelector("#esc-msg");
+  if (m) m.textContent = txt;
+}
+function contar() {
+  const n = capa && capa.querySelector("#esc-n");
+  if (n) n.textContent = escaneados;
+}
+
+/* ---------- abrir y cerrar ---------- */
 async function abrirEscaner(modo) {
   if (!HAY_ESCANER) {
     avisar("Este navegador no puede escanear. Usá Chrome en Android.", "error");
     return;
   }
-  modoEsc = modo; escaneadosEnSesion = 0; ultimoCodigo = "";
-  const titulos = {
-    vender: "Escaneá lo que vendés",
-    recibir: "Escaneá lo que entra",
-    conteo: "Contando inventario"
-  };
+  if (modo === "recibir" && !compraElegida()) {
+    avisar("Primero elegí de qué proveedor es la compra.", "error");
+    vista = "recibir"; pintar();
+    document.getElementById("c-prov")?.focus();
+    return;
+  }
+  prepararAudio();
+  modoEsc = modo;
+  escaneados = 0;
+  codigoBloqueado = "";
   capa = document.createElement("div");
   capa.className = "escaner";
   capa.innerHTML = `
     <video playsinline muted></video>
     <div class="mira"></div>
-    <div class="esc-top"><b>${titulos[modo]}</b><button id="cerrar-esc">Listo</button></div>
-    <div class="esc-pie" id="esc-msg"><span class="esc-cont" id="esc-cont"></span>Apuntá al código de barras</div>`;
+    <div class="esc-top">
+      <div>
+        <b>${modo === "vender" ? "Escaneá lo que vendés" : "Escaneá lo que entra"}</b>
+        ${modo === "recibir" ? `<div class="esc-compra">${h(compraTexto())}</div>` : ""}
+        <div class="esc-cuenta"><span id="esc-n">0</span> escaneados</div>
+      </div>
+      <div class="der">
+        <button class="sw" id="sw-sonido">Sonido</button>
+        <button class="sw" id="sw-vibrar">Vibra</button>
+        <button id="cerrar-esc">Cerrar</button>
+      </div>
+    </div>
+    <div class="esc-pie" id="esc-msg">Apuntá al código de barras</div>`;
   document.body.appendChild(capa);
   video = capa.querySelector("video");
+
+  capa.querySelector("#sw-sonido").onclick = e => {
+    conSonido = !conSonido;
+    e.currentTarget.classList.toggle("off", !conSonido);
+    if (conSonido) sonarOk();
+  };
+  capa.querySelector("#sw-vibrar").onclick = e => {
+    conVibrar = !conVibrar;
+    e.currentTarget.classList.toggle("off", !conVibrar);
+    if (conVibrar) vibrar(60);
+  };
 
   try {
     flujo = await navigator.mediaDevices.getUserMedia({
@@ -391,6 +677,7 @@ async function abrirEscaner(modo) {
   }
   video.srcObject = flujo;
   await video.play();
+
   detector = new BarcodeDetector({
     formats: ["ean_13","ean_8","upc_a","upc_e","code_128","code_39","itf"]
   });
@@ -406,82 +693,214 @@ function cerrarEscaner() {
   capa = null; video = null;
 }
 
+/* ---------- freno y reanudacion ---------- */
+function frenar() {
+  corriendo = false;
+  if (video) { try { video.pause(); } catch (_) {} }
+}
+
+function seguirEscaneando() {
+  if (!capa) return;
+  capa.querySelector(".tarjeta")?.remove();
+  capa.querySelector(".alta")?.remove();
+  pintarMira("");
+  avisarEnEscaner("Apuntá al código de barras");
+  vacios = 0;
+  if (video) video.play().catch(() => {});
+  corriendo = true;
+  bucle();
+}
+
 async function bucle() {
   if (!corriendo || !video) return;
   try {
     const hallados = await detector.detect(video);
-    if (hallados.length) await manejarCodigo(hallados[0].rawValue.trim());
-  } catch (_) {}
-  if (corriendo) setTimeout(bucle, 200);
+    if (!hallados.length) {
+      // tres cuadros seguidos sin ver nada = se fue de cuadro de verdad,
+      // recien ahi el mismo codigo puede volver a leerse
+      if (++vacios >= 3) codigoBloqueado = "";
+    } else {
+      vacios = 0;
+      const codigo = hallados[0].rawValue.trim();
+      if (codigo === codigoBloqueado) {
+        avisarEnEscaner("Ese ya lo cargaste. Apuntá al siguiente.");
+      } else {
+        await manejarCodigo(codigo);
+      }
+    }
+  } catch (_) { /* cuadro perdido, sigue */ }
+  if (corriendo) setTimeout(bucle, 220);
 }
 
-function mensajeEscaner(txt) {
-  const m = capa && capa.querySelector("#esc-msg");
-  const c = capa && capa.querySelector("#esc-cont");
-  if (c) c.textContent = escaneadosEnSesion || "";
-  if (m) {
-    const nodos = [...m.childNodes];
-    const ultimo = nodos[nodos.length - 1];
-    if (ultimo && ultimo.nodeType === 3) ultimo.textContent = txt;
-    else m.appendChild(document.createTextNode(txt));
-  }
+/* ---------- tarjeta de confirmacion ---------- */
+function tarjeta({titulo, linea, mal, deshacer, sumar}) {
+  if (!capa) return;
+  capa.querySelector(".tarjeta")?.remove();
+  const div = document.createElement("div");
+  div.className = "tarjeta" + (mal ? " mal" : "");
+  div.innerHTML = `
+    <h3>${titulo}</h3>
+    <div class="linea">${linea}</div>
+    <button class="btn acc ancho" id="t-seguir">Seguir escaneando</button>
+    <div class="btns">
+      ${sumar ? `<button class="btn sec" id="t-mas">Sumar otra</button>` : ""}
+      ${deshacer ? `<button class="btn sec" id="t-deshacer">Deshacer</button>` : ""}
+      <button class="btn sec" id="t-cerrar">Terminar</button>
+    </div>`;
+  capa.appendChild(div);
+
+  div.querySelector("#t-seguir").onclick = seguirEscaneando;
+  div.querySelector("#t-cerrar").onclick = async () => {
+    cerrarEscaner(); await cargar(); pintar(); refrescarHoy();
+  };
+  const bMas = div.querySelector("#t-mas");
+  if (bMas) bMas.onclick = () => sumarOtra(sumar);
+  const bDes = div.querySelector("#t-deshacer");
+  if (bDes) bDes.onclick = () => deshacerUltimo();
 }
 
+async function sumarOtra(codigo) {
+  try {
+    const p = porCodigo(codigo);
+    const m = await nuevoMovimiento(codigo, "ingreso", 1, "escaneado", datosCompra(p && p.costo));
+    ultimoMov = m.id;
+    await cargar();
+    escaneados++; contar();
+    sonarOk(); vibrar([40,40,40]); destello();
+    exito(porCodigo(codigo), "ingreso");
+  } catch (err) { falla("No se pudo guardar", err.message); }
+}
+
+async function deshacerUltimo() {
+  if (!ultimoMov) return;
+  const id = ultimoMov; ultimoMov = null;
+  try {
+    await borrarMovimiento(id);
+    await cargar();
+    if (escaneados > 0) escaneados--;
+    contar();
+    refrescarHoy();
+    tarjeta({titulo: "Deshecho", linea: "El último movimiento no quedó registrado."});
+  } catch (err) { falla("No se pudo deshacer", err.message); }
+}
+
+function exito(p, tipo) {
+  pintarMira("ok");
+  contar();
+  if (tipo === "venta")
+    tarjeta({
+      titulo: p.nombre,
+      linea: `${plata(p.precio)} · quedan <b>${p.stock}</b>`,
+      deshacer: true
+    });
+  else
+    tarjeta({
+      titulo: p.nombre,
+      linea: `costo ${plata(p.costo)} · ahora hay <b>${p.stock}</b>`,
+      deshacer: true, sumar: p.codigo
+    });
+}
+
+function falla(titulo, detalle) {
+  sonarError(); vibrar([160,80,160]);
+  destello("mal"); pintarMira("mal");
+  tarjeta({titulo, linea: detalle, mal: true});
+}
+
+/* ---------- una lectura ---------- */
 async function manejarCodigo(codigo) {
-  const ahora = Date.now();
-  if (codigo === ultimoCodigo && ahora - ultimoMomento < 1500) return;
-  ultimoCodigo = codigo; ultimoMomento = ahora;
+  frenar();
+  codigoBloqueado = codigo;
 
-  let p = porCodigo(codigo);
-
-  /* --- alta silenciosa: nunca frena el escaneo --- */
+  const p = porCodigo(codigo);
   if (!p) {
-    try {
-      await guardarProductos([{
-        codigo, ean_alt: null, nombre: SIN_NOMBRE + codigo,
-        rubro: null, subrubro: null, precio: 0, costo: 0,
-        descripcion: null, foto_url_1: null, foto_url_2: null, foto_url_3: null,
-        activo: true
-      }]);
-      await cargar();
-      p = porCodigo(codigo);
-      if (navigator.vibrate) navigator.vibrate([90,50,90]);
-    } catch (err) { mensajeEscaner("No se pudo dar de alta: " + err.message); return; }
-  } else if (navigator.vibrate) {
-    navigator.vibrate(55);
-  }
-
-  escaneadosEnSesion++;
-  const sinNombre = p.nombre.startsWith(SIN_NOMBRE);
-
-  if (modoEsc === "conteo") {
-    conteo[codigo] = (conteo[codigo] || 0) + 1;
-    guardarConteo();
-    mensajeEscaner(`${p.nombre} · contadas ${conteo[codigo]}`);
+    sonarNuevo(); vibrar([120,60,120]);
+    destello("nuevo"); pintarMira("nuevo");
+    panelAlta(codigo);
     return;
   }
 
   if (modoEsc === "vender") {
-    if (p.stock <= 0) { mensajeEscaner(`${p.nombre} — sin stock, se registró igual`); }
+    if (p.stock <= 0) { falla(p.nombre, "No queda stock cargado de este producto."); return; }
     try {
-      const m = await nuevoMovimiento(codigo, "venta", -1, "escaneado");
+      const m = await nuevoMovimiento(p.codigo, "venta", -1, "escaneado");
       ultimoMov = m.id;
       await cargar();
-      const q = porCodigo(codigo);
-      mensajeEscaner(sinNombre
-        ? `Código nuevo registrado · quedan ${q ? q.stock : "?"}`
-        : `${p.nombre} · ${plata(p.precio)} · quedan ${q ? q.stock : "?"}`);
+      escaneados++;
+      sonarOk(); vibrar(60); destello();
+      exito(porCodigo(codigo) || p, "venta");
       refrescarHoy();
-    } catch (err) { mensajeEscaner("Error: " + err.message); }
-    return;
+    } catch (err) { falla("No se registró la venta", err.message); }
+  } else {
+    try {
+      const m = await nuevoMovimiento(p.codigo, "ingreso", 1, "escaneado", datosCompra(p.costo));
+      ultimoMov = m.id;
+      await cargar();
+      escaneados++;
+      sonarOk(); vibrar([40,40,40]); destello();
+      exito(porCodigo(codigo) || p, "ingreso");
+    } catch (err) { falla("No se pudo guardar", err.message); }
   }
+}
 
-  try {
-    await nuevoMovimiento(codigo, "ingreso", 1, "escaneado");
-    await cargar();
-    const q = porCodigo(codigo);
-    mensajeEscaner(`${p.nombre} · ahora ${q ? q.stock : "?"}`);
-  } catch (err) { mensajeEscaner("Error: " + err.message); }
+/* ---------- alta de codigo desconocido ---------- */
+function panelAlta(codigo) {
+  if (!capa) return;
+  capa.querySelector(".tarjeta")?.remove();
+  const div = document.createElement("div");
+  div.className = "alta";
+  div.innerHTML = `
+    <h3>Código nuevo</h3>
+    <p>No tenés nada cargado con <code>${codigo}</code>. Dale un nombre y queda registrado para siempre.</p>
+    <div class="campo"><label for="a-nom">Nombre</label><input id="a-nom" placeholder="Tubito 35ml Yara"></div>
+    <div class="campo"><label for="a-rub">Rubro</label><input id="a-rub" value="Perfumeria"></div>
+    <div class="campo"><label for="a-pre">Precio</label><input id="a-pre" type="number" inputmode="numeric" placeholder="6000"></div>
+    <div class="campo"><label for="a-cos">Costo</label><input id="a-cos" type="number" inputmode="numeric" placeholder="1600"></div>
+    <div class="campo"><label for="a-cant">Cantidad</label><input id="a-cant" type="number" inputmode="numeric" value="1"></div>
+    <div class="btns">
+      <button class="btn acc" id="a-guardar">Guardar y seguir</button>
+      <button class="btn sec" id="a-saltar">Saltear</button>
+    </div>`;
+  capa.appendChild(div);
+  setTimeout(() => div.querySelector("#a-nom").focus(), 100);
+
+  div.querySelector("#a-saltar").onclick = seguirEscaneando;
+
+  div.querySelector("#a-guardar").onclick = async () => {
+    const nombre = div.querySelector("#a-nom").value.trim();
+    if (!nombre) { div.querySelector("#a-nom").focus(); return; }
+    const cant = Number(div.querySelector("#a-cant").value) || 1;
+    try {
+      await guardarProductos([{
+        codigo, ean_alt: null, nombre,
+        rubro: div.querySelector("#a-rub").value.trim() || null,
+        subrubro: null,
+        precio: Number(div.querySelector("#a-pre").value) || 0,
+        costo: Number(div.querySelector("#a-cos").value) || 0,
+        descripcion: null, foto_url_1: null, foto_url_2: null, foto_url_3: null,
+        activo: true
+      }]);
+      const costo = Number(div.querySelector("#a-cos").value) || 0;
+      const m = modoEsc === "vender"
+        ? await nuevoMovimiento(codigo, "ajuste", cant, "alta al escanear")
+        : await nuevoMovimiento(codigo, "ingreso", cant, "alta al escanear", datosCompra(costo));
+      ultimoMov = m.id;
+      await cargar();
+      escaneados++;
+      sonarOk(); vibrar(60); destello();
+      div.remove();
+      const np = porCodigo(codigo);
+      pintarMira("ok"); contar();
+      tarjeta({
+        titulo: nombre,
+        linea: `cargado con <b>${np ? np.stock : cant}</b> ${cant === 1 ? "unidad" : "unidades"}`,
+        deshacer: false
+      });
+    } catch (err) {
+      div.remove();
+      falla("No se pudo guardar", err.message);
+    }
+  };
 }
 
 /* =====================================================================
@@ -489,6 +908,38 @@ async function manejarCodigo(codigo) {
    ===================================================================== */
 const app = document.getElementById("app");
 const plata = n => "$" + Number(n || 0).toLocaleString("es-AR");
+const h = v => String(v ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+function fecha(iso) {
+  if (!iso) return "";
+  const d = new Date(iso), dos = n => String(n).padStart(2, "0");
+  const txt = dos(d.getDate()) + "/" + dos(d.getMonth() + 1);
+  return d.getFullYear() === new Date().getFullYear() ? txt : txt + "/" + String(d.getFullYear()).slice(2);
+}
+
+function lineaProveedor(p) {
+  if (!p.ultimo_proveedor) return `<div class="fila-prov sin">sin proveedor anotado</div>`;
+  if (p.ultima_cantidad === 0)
+    return `<div class="fila-prov"><b>${h(p.ultimo_proveedor)}</b> · anotado a mano</div>`;
+  return `<div class="fila-prov"><b>${h(p.ultimo_proveedor)}</b> · ${fecha(p.ultima_compra)}` +
+    `${p.ultimo_costo ? " · " + plata(p.ultimo_costo) : ""}</div>`;
+}
+
+function opcionesProveedor(elegido, conSinProveedor) {
+  const sel = v => String(v) === String(elegido) ? " selected" : "";
+  return `<option value=""${sel("")} disabled>Elegí de dónde viene</option>` +
+    proveedores.map(pr => `<option value="${pr.id}"${sel(pr.id)}>${h(pr.nombre)}</option>`).join("") +
+    (conSinProveedor ? `<option value="0"${sel("0")}>Sin proveedor</option>` : "") +
+    `<option value="nuevo">Otro proveedor…</option>`;
+}
+
+function camposCompra() {
+  return `<div class="compra">
+    <div class="campo"><label for="c-prov">Proveedor</label>
+      <select id="c-prov">${opcionesProveedor(compra.proveedor_id, true)}</select></div>
+    <div class="campo"><label for="c-tick">Ticket</label>
+      <input id="c-tick" inputmode="numeric" autocomplete="off" placeholder="Número (opcional)" value="${h(compra.comprobante)}"></div>
+  </div>`;
+}
 
 function visibles() {
   const q = filtro.trim().toLowerCase();
@@ -498,14 +949,11 @@ function visibles() {
     (p.codigo||"").toLowerCase().includes(q) ||
     (p.ean_alt||"").toLowerCase().includes(q) ||
     (p.rubro||"").toLowerCase().includes(q) ||
-    (p.subrubro||"").toLowerCase().includes(q));
+    (p.subrubro||"").toLowerCase().includes(q) ||
+    (p.proveedores_todos||"").toLowerCase().includes(q));
 }
 
 function claseChip(s) { return s <= 0 ? "chip cero" : s <= 2 ? "chip poco" : "chip"; }
-function nom(p) {
-  const sn = p.nombre.startsWith(SIN_NOMBRE);
-  return `<div class="fila-nom${sn ? " sn" : ""}">${p.nombre}</div>`;
-}
 
 const ICONO = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 <path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>
@@ -521,11 +969,13 @@ function barra(ph, modo) {
 function pantallaVender() {
   if (!productos.length)
     return barra("Buscar producto","vender") +
-      `<div class="vacio"><b>Todavía no hay productos</b>Empezá por Conteo para cargar todo escaneando, o importá tu CSV.</div>`;
+      `<div class="vacio"><b>Todavía no hay productos</b>Cargá tu CSV desde la pestaña CSV, o escaneá y creá sobre la marcha.</div>`;
   const filas = visibles().map(p => `
     <div class="fila">
-      <div class="fila-txt">${nom(p)}
-        <div class="fila-meta">${p.codigo}${p.subrubro ? " · " + p.subrubro : ""}</div></div>
+      <div class="fila-txt">
+        <div class="fila-nom">${p.nombre}</div>
+        <div class="fila-meta">${p.codigo}${p.subrubro ? " · " + p.subrubro : ""}</div>
+      </div>
       <div class="fila-precio">${plata(p.precio)}</div>
       <div class="${claseChip(p.stock)}">${p.stock}</div>
       <button class="vender" data-vender="${p.codigo}" ${p.stock<=0?"disabled":""}>vendí</button>
@@ -535,112 +985,72 @@ function pantallaVender() {
 }
 
 function pantallaRecibir() {
-  const filas = (filtro ? visibles() : productos.slice(0,15)).map(p => `
+  const ultimos = productos.slice().sort((a,b) =>
+    (b.creado_en||"").localeCompare(a.creado_en||"")).slice(0,15);
+  const filas = (filtro ? visibles() : ultimos).map(p => `
     <div class="fila">
-      <div class="fila-txt">${nom(p)}
-        <div class="fila-meta">${p.codigo} · costo ${plata(p.costo)}</div></div>
+      <div class="fila-txt">
+        <div class="fila-nom">${p.nombre}</div>
+        <div class="fila-meta">${p.codigo} · costo ${plata(p.costo)}</div>
+      </div>
       <div class="${claseChip(p.stock)}">${p.stock}</div>
       <button class="mini" data-sumar="${p.codigo}" aria-label="Sumar uno">+</button>
       <button class="mini" data-restar="${p.codigo}" aria-label="Restar uno">−</button>
     </div>`).join("");
   return `<div class="bloque">
       <h2>Recibir mercadería</h2>
-      <p>Suma una unidad por escaneo. Los códigos que no conoce se dan de alta solos y no frenan el escaneo: después les ponés nombre desde la PC.</p>
-      <button class="btn acc ancho" data-escanear="recibir">Escanear la compra</button>
-    </div>` + barra("Buscar para cargar a mano","recibir") +
+      <p>Elegí de dónde viene la compra y pasá la cámara por cada producto de la bolsa. Todo lo que cargues acá queda anotado a ese proveedor.</p>
+      ${camposCompra()}
+      <button class="btn acc ancho" data-escanear="recibir" ${compraElegida() ? "" : "disabled"}>Escanear la compra</button>
+    </div>` +
+    barra("Buscar para cargar a mano","recibir") +
     `<div class="lista">${filas || '<div class="vacio"><b>Sin resultados</b>Escaneá para dar de alta.</div>'}</div>`;
 }
 
-function pantallaConteo() {
-  const codigos = Object.keys(conteo);
-  const contadas = codigos.reduce((a,c) => a + conteo[c], 0);
-
-  if (cerrarConteo) {
-    const lineas = [];
-    productos.forEach(p => {
-      const c = conteo[p.codigo];
-      if (c === undefined && !ponerCeroNoContado) return;
-      const cont = c === undefined ? 0 : c;
-      const dif = cont - p.stock;
-      lineas.push({p, cont, dif});
-    });
-    lineas.sort((a,b) => Math.abs(b.dif) - Math.abs(a.dif));
-    const conDif = lineas.filter(l => l.dif !== 0);
-    const cuerpo = lineas.slice(0,120).map(l => `<tr>
-        <td>${l.p.nombre}</td><td>${l.p.stock}</td><td>${l.cont}</td>
-        <td class="${l.dif < 0 ? "falta" : l.dif > 0 ? "sobra" : ""}">${l.dif > 0 ? "+" : ""}${l.dif || "—"}</td>
-      </tr>`).join("");
-    return `<div class="bloque">
-      <h2>Resultado del conteo</h2>
-      <p>Esto es lo que contaste contra lo que decía el sistema. Nada se guardó todavía.</p>
-      <div class="cuenta">
-        <span>${lineas.length} productos</span>
-        <span class="${conDif.length ? "cambio" : "nuevo"}">${conDif.length} con diferencia</span>
-        <span class="nuevo">${contadas} unidades contadas</span>
-      </div>
-      <label class="check">
-        <input type="checkbox" id="cero" ${ponerCeroNoContado ? "checked" : ""}>
-        <span>Poner en cero lo que no conté. Marcalo solo si contaste absolutamente todo el puesto; si contaste una parte, dejalo sin marcar.</span>
-      </label>
-      <div class="tabla"><table>
-        <thead><tr><th>Producto</th><th>Sistema</th><th>Conté</th><th>Dif.</th></tr></thead>
-        <tbody>${cuerpo || '<tr><td colspan="4">Nada para comparar</td></tr>'}</tbody></table></div>
-      <div class="btns" style="margin-top:12px">
-        <button class="btn acc" id="aplicar-conteo" ${conDif.length ? "" : "disabled"}>Aplicar el conteo</button>
-        <button class="btn sec" id="volver-conteo">Seguir contando</button>
-      </div>
-    </div>`;
-  }
-
-  const filas = codigos.map(c => {
-    const p = porCodigo(c) || {nombre: SIN_NOMBRE + c, codigo: c, stock: 0};
-    return `<div class="fila">
-      <div class="fila-txt">${nom(p)}<div class="fila-meta">${p.codigo} · sistema ${p.stock}</div></div>
-      <input class="cant" type="number" inputmode="numeric" data-conteo="${c}" value="${conteo[c]}">
-      <button class="mini" data-quitar-conteo="${c}" aria-label="Sacar del conteo">×</button>
-    </div>`;
-  }).join("");
-
-  const paraSumar = filtro ? visibles().filter(p => conteo[p.codigo] === undefined).slice(0,10).map(p => `
-    <div class="fila">
-      <div class="fila-txt">${nom(p)}<div class="fila-meta">${p.codigo} · sistema ${p.stock}</div></div>
-      <button class="mini" data-agregar-conteo="${p.codigo}" aria-label="Agregar al conteo">+</button>
-    </div>`).join("") : "";
-
-  return `<div class="bloque">
-      <h2>Conteo de inventario</h2>
-      <p>Escaneá todo lo que tenés. Esto no suma al stock: fija la cantidad real. Al terminar te muestro las diferencias antes de guardar nada.</p>
-      <button class="btn acc ancho" data-escanear="conteo">${codigos.length ? "Seguir escaneando" : "Empezar a contar"}</button>
-      ${codigos.length ? `<div class="btns" style="margin-top:8px">
-        <button class="btn" id="ver-conteo">Ver diferencias (${contadas} unidades)</button>
-        <button class="btn sec" id="tirar-conteo">Descartar</button></div>` : ""}
-    </div>
-    <div class="bloque">
-      <h2>Sin código de barras</h2>
-      <p>Los concentrados de 60ml, el Tupperware y los catálogos no se escanean. Buscalos acá y agregalos al conteo a mano.</p>
-    </div>
-    ${barra("Buscar para agregar al conteo","conteo")}
-    ${paraSumar ? `<div class="lista">${paraSumar}</div>` : ""}
-    ${codigos.length ? `<div class="lista">${filas}</div>`
-      : `<div class="vacio"><b>Conteo vacío</b>Escaneá o buscá productos para empezar.</div>`}`;
-}
-
 function pantallaProductos() {
-  const sinNombre = productos.filter(p => p.nombre.startsWith(SIN_NOMBRE)).length;
   const filas = visibles().map(p => `
     <div class="fila">
-      <div class="fila-txt">${nom(p)}
-        <div class="fila-meta">${p.codigo} · ${plata(p.precio)} · costo ${plata(p.costo)}</div></div>
+      <div class="fila-txt">
+        <div class="fila-nom">${p.nombre}</div>
+        <div class="fila-meta">${p.codigo} · ${plata(p.precio)} · costo ${plata(p.costo)}</div>
+        ${lineaProveedor(p)}
+      </div>
       <div class="${claseChip(p.stock)}">${p.stock}</div>
-      <button class="mini" data-editar="${p.codigo}" aria-label="Editar">✎</button>
+      <button class="mini" data-editar="${p.codigo}" aria-label="Ver ficha de ${h(p.nombre)}">✎</button>
     </div>`).join("");
-  return (sinNombre ? `<div class="bloque">
-      <h2>${sinNombre} sin nombre</h2>
-      <p>Salieron de escaneos. Lo más cómodo es exportar el CSV, completarlos en la PC y volver a importar.</p>
-      <div class="btns"><button class="btn" id="exportar">Bajar inventario</button></div>
-    </div>` : "") +
-    barra("Buscar producto","vender") +
-    `<div class="lista">${filas || '<div class="vacio"><b>Sin productos</b>Importá el CSV o contá escaneando.</div>'}</div>`;
+  return barra("Buscar producto o proveedor","vender") +
+    `<div class="lista">${filas || '<div class="vacio"><b>Sin productos</b>Cargá el CSV o escaneá para dar de alta.</div>'}</div>`;
+}
+
+function pantallaPreviaCompra() {
+  if (!previaCompra) return "";
+  const p = previaCompra;
+  const nuevos = p.items.filter(t => !t.viejo).length;
+  const unidades = p.items.reduce((a, t) => a + t.cantidad, 0);
+  const filas = p.items.slice(0, 60).map(t => {
+    const antes = t.viejo ? t.viejo.stock : 0;
+    const cambiaCosto = t.viejo && t.costo && Number(t.viejo.costo) !== t.costo;
+    return `<tr><td>${t.viejo ? "suma" : "nuevo"}</td><td>${h(t.nombre)}</td>
+      <td>${antes} → ${antes + t.cantidad}</td>
+      <td class="${cambiaCosto ? "d" : ""}">${cambiaCosto ? plata(t.viejo.costo) + " → " : ""}${t.costo ? plata(t.costo) : "—"}</td></tr>`;
+  }).join("");
+  return `<div class="previa">
+    <div class="cuenta">
+      <span class="nuevo">${nuevos} nuevos</span>
+      <span>${p.items.length - nuevos} ya cargados</span>
+      <span>${unidades} unidades</span>
+      ${p.rotos.length ? `<span class="cambio">${p.rotos.length} con error</span>` : ""}
+    </div>
+    ${p.usoStock ? `<p class="nota">El archivo no trae columna cantidad: tomé la columna stock como unidades compradas.</p>` : ""}
+    ${p.rotos.length ? `<p>Se saltean las líneas: ${p.rotos.map(r => r.linea + " (" + r.motivo + ")").join(", ")}</p>` : ""}
+    <div class="tabla"><table>
+      <thead><tr><th></th><th>Producto</th><th>Stock</th><th>Costo</th></tr></thead>
+      <tbody>${filas || '<tr><td colspan="4">Nada para cargar</td></tr>'}</tbody></table></div>
+    ${compraElegida() ? "" : `<p class="nota" style="margin-top:12px">Elegí el proveedor arriba para poder cargarla.</p>`}
+    <div class="btns" style="margin-top:12px">
+      <button class="btn acc" id="aplicar-compra" ${p.items.length && compraElegida() ? "" : "disabled"}>Cargar compra</button>
+      <button class="btn sec" id="cancelar-compra">Cancelar</button>
+    </div></div>`;
 }
 
 function pantallaCsv() {
@@ -655,14 +1065,15 @@ function pantallaCsv() {
         : (Number(t.viejo.precio) !== t.fila.precio
             ? `${plata(t.viejo.precio)} → ${plata(t.fila.precio)}` : plata(t.fila.precio));
       return `<tr><td>${esNuevo?"nuevo":"cambia"}</td><td>${t.fila.nombre}</td>
-        <td class="${esNuevo?"":"d"}">${dPrecio}</td><td class="${esNuevo?"":"d"}">${dStock}</td></tr>`;
+        <td class="${esNuevo?"":"d"}">${dPrecio}</td>
+        <td class="${esNuevo?"":"d"}">${dStock}</td></tr>`;
     }).join("");
     previa = `<div class="previa">
       <div class="cuenta">
         <span class="nuevo">${p.nuevos.length} nuevos</span>
         <span class="cambio">${p.cambios.length} con cambios</span>
         <span>${p.iguales.length} sin cambios</span>
-        ${p.rotos.length ? `<span class="malo">${p.rotos.length} con error</span>` : ""}
+        ${p.rotos.length ? `<span class="cambio">${p.rotos.length} con error</span>` : ""}
       </div>
       ${p.rotos.length ? `<p>Se saltean las lineas: ${p.rotos.map(r=>r.linea+" ("+r.motivo+")").join(", ")}</p>` : ""}
       <div class="tabla"><table>
@@ -676,8 +1087,17 @@ function pantallaCsv() {
   const rubros = [...new Set(productos.map(p => p.rubro).filter(Boolean))];
   return `
   <div class="bloque">
+    <h2>Ingreso de compra</h2>
+    <p>Para el CSV que sale del ticket. Las cantidades se suman al stock y todo queda anotado al proveedor.</p>
+    ${camposCompra()}
+    <div class="btns">
+      <label class="btn acc" for="archivo-compra">Elegir ticket CSV</label>
+      <input id="archivo-compra" type="file" accept=".csv,text/csv" hidden>
+    </div>${pantallaPreviaCompra()}
+  </div>
+  <div class="bloque">
     <h2>Cargar planilla</h2>
-    <p>Te muestro qué va a cambiar antes de tocar nada. El código decide si el producto se crea o se actualiza.</p>
+    <p>Para corregir el inventario completo desde la PC. Acá el stock del archivo reemplaza al actual. El código decide si el producto se crea o se actualiza.</p>
     <div class="btns">
       <label class="btn acc" for="archivo">Elegir archivo CSV</label>
       <input id="archivo" type="file" accept=".csv,text/csv" hidden>
@@ -685,7 +1105,7 @@ function pantallaCsv() {
   </div>
   <div class="bloque">
     <h2>Exportar</h2>
-    <p>Todo el inventario, listo para completar nombres y precios en la PC.</p>
+    <p>Todo el inventario con las columnas de foto y descripción, listo para editar en la PC.</p>
     <div class="btns"><button class="btn" id="exportar">Bajar inventario</button></div>
   </div>
   <div class="bloque">
@@ -703,22 +1123,17 @@ function pantallaCsv() {
 /* =====================================================================
    6. DIBUJAR
    ===================================================================== */
-const VISTAS = [["vender","Vender"],["recibir","Recibir"],["conteo","Conteo"],
-                ["productos","Productos"],["csv","CSV"]];
-
 function pintar() {
   const foco = document.activeElement && document.activeElement.id === "q";
   const pos = foco ? document.getElementById("q").selectionStart : null;
 
-  document.getElementById("tabs").innerHTML = VISTAS.map(([v,t]) =>
-    `<button data-vista="${v}" aria-current="${v === vista}">${t}${
-      v === "conteo" && Object.keys(conteo).length ? '<span class="punto"></span>' : ""}</button>`).join("");
-
   app.innerHTML = vista === "vender" ? pantallaVender()
                 : vista === "recibir" ? pantallaRecibir()
-                : vista === "conteo" ? pantallaConteo()
                 : vista === "productos" ? pantallaProductos()
                 : pantallaCsv();
+
+  document.querySelectorAll(".tabs button").forEach(b =>
+    b.setAttribute("aria-current", String(b.dataset.vista === vista)));
 
   document.getElementById("n-prod").textContent = productos.length;
   document.getElementById("n-unid").textContent =
@@ -750,32 +1165,22 @@ function avisar(texto, accion) {
 /* =====================================================================
    7. EVENTOS
    ===================================================================== */
-document.getElementById("tabs").addEventListener("click", e => {
+document.querySelector(".tabs").addEventListener("click", e => {
   const b = e.target.closest("button[data-vista]");
   if (!b) return;
-  vista = b.dataset.vista; filtro = ""; cerrarConteo = false;
-  pintar(); window.scrollTo(0,0);
+  vista = b.dataset.vista; filtro = ""; pintar(); window.scrollTo(0,0);
 });
 
 document.addEventListener("input", e => {
-  if (e.target.id === "q") { filtro = e.target.value; pintar(); return; }
-  const c = e.target.dataset && e.target.dataset.conteo;
-  if (c) {
-    const n = Number(e.target.value);
-    if (e.target.value === "") return;
-    if (n <= 0) delete conteo[c]; else conteo[c] = n;
-    guardarConteo();
-  }
+  if (e.target.id === "q") { filtro = e.target.value; pintar(); }
+  if (e.target.id === "c-tick") compra.comprobante = e.target.value;
 });
 
 document.addEventListener("click", async e => {
   const t = e.target;
 
   if (t.id === "cerrar-esc" || t.closest("#cerrar-esc")) {
-    const modo = modoEsc;
-    cerrarEscaner(); await cargar();
-    if (modo === "conteo") { vista = "conteo"; cerrarConteo = false; }
-    pintar(); refrescarHoy(); return;
+    cerrarEscaner(); await cargar(); pintar(); return;
   }
 
   const modo = t.closest("[data-escanear]")?.dataset.escanear;
@@ -804,61 +1209,39 @@ document.addEventListener("click", async e => {
   const restar = t.closest("[data-restar]")?.dataset.restar;
   if (sumar || restar) {
     const c = sumar || restar;
+    if (sumar && !compraElegida()) {
+      avisar("Elegí arriba de qué proveedor es la compra (o Sin proveedor).", "error");
+      document.getElementById("c-prov")?.focus();
+      return;
+    }
     try {
-      const m = await nuevoMovimiento(c, sumar ? "ingreso" : "ajuste", sumar ? 1 : -1, "a mano");
+      const m = sumar
+        ? await nuevoMovimiento(c, "ingreso", 1, "a mano", datosCompra(porCodigo(c)?.costo))
+        : await nuevoMovimiento(c, "ajuste", -1, "a mano");
       ultimoMov = m.id;
       await cargar(); pintar();
     } catch (err) { avisar("No se pudo guardar: " + err.message, "error"); }
     return;
   }
 
-  /* ---------- conteo ---------- */
-  const agr = t.closest("[data-agregar-conteo]")?.dataset.agregarConteo;
-  if (agr) { conteo[agr] = (conteo[agr] || 0) + 1; guardarConteo(); pintar(); return; }
-
-  const qui = t.closest("[data-quitar-conteo]")?.dataset.quitarConteo;
-  if (qui) { delete conteo[qui]; guardarConteo(); pintar(); return; }
-
-  if (t.id === "ver-conteo") { cerrarConteo = true; pintar(); window.scrollTo(0,0); return; }
-  if (t.id === "volver-conteo") { cerrarConteo = false; pintar(); return; }
-
-  if (t.id === "tirar-conteo") {
-    if (!confirm("¿Descartar el conteo? Se pierde todo lo escaneado.")) return;
-    limpiarConteo(); cerrarConteo = false; pintar(); avisar("Conteo descartado"); return;
-  }
-
-  if (t.id === "aplicar-conteo") {
-    t.disabled = true; t.textContent = "Aplicando…";
-    let n = 0;
-    try {
-      for (const p of productos) {
-        const c = conteo[p.codigo];
-        if (c === undefined && !ponerCeroNoContado) continue;
-        const delta = (c === undefined ? 0 : c) - p.stock;
-        if (delta === 0) continue;
-        await nuevoMovimiento(p.codigo, "ajuste", delta,
-          "conteo " + new Date().toISOString().slice(0,10));
-        n++;
-      }
-      limpiarConteo(); cerrarConteo = false;
-      await cargar(); pintar();
-      avisar(`${n} productos ajustados por conteo`);
-    } catch (err) { pintar(); avisar("Falló el ajuste: " + err.message, "error"); }
-    return;
-  }
-
   const ed = t.closest("[data-editar]")?.dataset.editar;
-  if (ed) {
-    const p = porCodigo(ed);
-    const nombre = prompt("Nombre", p.nombre.startsWith(SIN_NOMBRE) ? "" : p.nombre);
-    if (nombre === null) return;
-    const precio = Number(prompt("Precio de venta", p.precio));
-    const alt = prompt("Segundo código de barras (vacío si no hay)", p.ean_alt || "");
+  if (ed) { abrirFicha(ed); return; }
+
+  if (t.id === "cancelar-compra") { previaCompra = null; pintar(); return; }
+
+  if (t.id === "aplicar-compra") {
+    if (!compraElegida()) return;
+    const extra = datosCompra(0);
     try {
-      await guardarProductos([{...quitarStock(p), nombre: nombre.trim() || p.nombre,
-        precio: isNaN(precio) ? p.precio : precio, ean_alt: (alt||"").trim() || null}]);
-      await cargar(); pintar(); avisar("Producto actualizado");
-    } catch (err) { avisar("No se pudo guardar: " + err.message, "error"); }
+      const ya = await ticketYaCargado(extra.proveedor_id, extra.comprobante);
+      const quien = (proveedores.find(x => x.id === extra.proveedor_id) || {}).nombre;
+      if (ya && !confirm(`El ticket ${extra.comprobante} de ${quien} ya se cargó el ${fecha(ya)}. ` +
+                         `Si lo cargás de nuevo, el stock se suma dos veces. ¿Cargarlo igual?`)) return;
+      t.disabled = true; t.textContent = "Cargando…";
+      const n = await aplicarCompra(previaCompra);
+      previaCompra = null; await cargar(); pintar();
+      avisar(`Compra cargada: ${n} ${n === 1 ? "unidad" : "unidades"} de ${h(compraTexto())}`);
+    } catch (err) { pintar(); avisar("Falló la carga: " + err.message, "error"); }
     return;
   }
 
@@ -884,7 +1267,7 @@ document.addEventListener("click", async e => {
     const afectados = productos.filter(p => !rubro || p.rubro === rubro);
     if (!afectados.length) { avisar("No hay productos en ese rubro", "error"); return; }
     previaCsv = {nuevos: [], iguales: [], rotos: [], cambios: afectados.map(p => ({
-      fila: {...quitarStock(p), precio: Math.round(Number(p.precio) * (1 + pct/100))},
+      fila: {...soloProducto(p), precio: Math.round(Number(p.precio) * (1 + pct/100))},
       stockCsv: null, stockViejo: p.stock, viejo: p}))};
     pintar();
     document.querySelector(".previa")?.scrollIntoView({behavior:"smooth", block:"center"});
@@ -892,10 +1275,18 @@ document.addEventListener("click", async e => {
   }
 });
 
-function quitarStock(p) { const {stock, ...resto} = p; return resto; }
-
-document.addEventListener("change", e => {
-  if (e.target.id === "cero") { ponerCeroNoContado = e.target.checked; pintar(); return; }
+document.addEventListener("change", async e => {
+  if (e.target.id === "c-prov") {
+    if (e.target.value === "nuevo") {
+      try {
+        const pr = await crearProveedor();
+        compra.proveedor_id = pr ? String(pr.id) : compra.proveedor_id;
+      } catch (err) { avisar("No se pudo crear el proveedor: " + err.message, "error"); }
+    } else compra.proveedor_id = e.target.value;
+    pintar();
+    return;
+  }
+  if (e.target.id === "archivo-compra") { leerArchivoCompra(e.target); return; }
   if (e.target.id !== "archivo") return;
   const f = e.target.files[0];
   if (!f) return;
@@ -906,6 +1297,10 @@ document.addEventListener("change", e => {
       if (!filas.length) { avisar("El archivo no tiene filas", "error"); return; }
       if (!("codigo" in filas[0]) && !("sku" in filas[0]) && !("ean" in filas[0])) {
         avisar("Falta la columna codigo", "error"); return;
+      }
+      if ("cantidad" in filas[0] || "proveedor" in filas[0] || "comprobante" in filas[0]) {
+        avisar("Ese archivo es un ticket de compra: cargalo en Ingreso de compra, así suma al stock en vez de reemplazarlo.", "error");
+        return;
       }
       previaCsv = compararCsv(filas);
       pintar();
@@ -919,22 +1314,154 @@ document.addEventListener("visibilitychange", () => {
   if (document.hidden && capa) cerrarEscaner();
 });
 
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && document.querySelector(".fondo")) cerrarFicha();
+});
+
+function leerArchivoCompra(input) {
+  const f = input.files[0];
+  if (!f) return;
+  const lector = new FileReader();
+  lector.onload = () => {
+    try {
+      const filas = leerCsv(lector.result);
+      if (!filas.length) { avisar("El archivo no tiene filas", "error"); return; }
+      if (!("codigo" in filas[0]) && !("sku" in filas[0]) && !("ean" in filas[0])) {
+        avisar("Falta la columna codigo", "error"); return;
+      }
+      // si el ticket trae proveedor y numero, los propone
+      const provCsv = (filas.find(x => x.proveedor)?.proveedor || "").trim();
+      if (provCsv) {
+        const pr = proveedores.find(x => x.nombre.toLowerCase() === provCsv.toLowerCase());
+        compra.proveedor_id = pr ? String(pr.id) : "";
+        if (!pr) avisar(`El archivo dice "${h(provCsv)}" y no está en tu lista. Elegilo arriba o crealo con Otro proveedor.`, "error");
+      }
+      const tickCsv = (filas.find(x => x.comprobante)?.comprobante || "").trim();
+      if (tickCsv) compra.comprobante = tickCsv;
+      previaCompra = compararCompra(filas);
+      pintar();
+      document.querySelector(".previa")?.scrollIntoView({behavior:"smooth", block:"center"});
+    } catch (err) { avisar("No se pudo leer el CSV: " + err.message, "error"); }
+  };
+  lector.readAsText(f, "utf-8");
+}
+
+/* =====================================================================
+   FICHA DE PRODUCTO: donde lo conseguis, historial y edicion
+   ===================================================================== */
+function cerrarFicha() { document.querySelector(".fondo")?.remove(); }
+
+async function abrirFicha(codigo) {
+  const p = porCodigo(codigo);
+  if (!p) return;
+  cerrarFicha();
+  const pr = proveedores.find(x => x.id === p.ultimo_proveedor_id);
+  const otros = (p.proveedores_todos || "").split(", ").filter(n => n && n !== p.ultimo_proveedor);
+  const fondo = document.createElement("div");
+  fondo.className = "fondo";
+  fondo.innerHTML = `
+  <div class="hoja" role="dialog" aria-modal="true" aria-labelledby="f-tit">
+    <div class="hoja-cab">
+      <div><h3 id="f-tit">${h(p.nombre)}</h3>
+        <div class="hoja-sub">${h(p.codigo)} · stock ${p.stock}</div></div>
+      <button class="cerrar-x" id="f-cerrar" aria-label="Cerrar">✕</button>
+    </div>
+    ${p.ultimo_proveedor ? `<div class="donde">
+        <div class="quien">${h(p.ultimo_proveedor)}</div>
+        ${pr && pr.direccion ? `<div class="calle">${h(pr.direccion)}</div>` : ""}
+        <div class="cuando">${p.ultima_cantidad === 0 ? "Anotado a mano el " + fecha(p.ultima_compra)
+          : "Última compra " + fecha(p.ultima_compra) + (p.ultimo_costo ? " a " + plata(p.ultimo_costo) : "")}${otros.length ? ". También en " + h(otros.join(", ")) : ""}</div>
+      </div>`
+    : `<div class="donde vacia"><div class="quien">Todavía no anotaste dónde lo comprás</div></div>`}
+    <div class="campo"><label for="f-nom">Nombre</label><input id="f-nom" value="${h(p.nombre)}"></div>
+    <div class="campo"><label for="f-pre">Precio</label><input id="f-pre" type="number" inputmode="numeric" value="${Number(p.precio) || 0}"></div>
+    <div class="campo"><label for="f-alt">2º código</label><input id="f-alt" inputmode="numeric" value="${h(p.ean_alt || "")}" placeholder="Si llega con otra etiqueta"></div>
+    <button class="btn acc ancho" id="f-guardar">Guardar cambios</button>
+    <h4>Compras</h4>
+    <div id="f-hist" class="hoja-sub">Cargando…</div>
+    <div class="anotar">
+      <select id="f-prov" aria-label="Proveedor">${opcionesProveedor("", false)}</select>
+      <button class="btn sec" id="f-anotar">Anotar</button>
+    </div>
+    <p class="hoja-sub" style="margin-top:6px">Anota dónde lo conseguís sin tocar el stock.</p>
+  </div>`;
+  document.body.appendChild(fondo);
+  fondo.querySelector("#f-cerrar").focus();
+
+  fondo.addEventListener("click", e => { if (e.target === fondo) cerrarFicha(); });
+  fondo.querySelector("#f-cerrar").onclick = cerrarFicha;
+
+  fondo.querySelector("#f-guardar").onclick = async () => {
+    const nombre = fondo.querySelector("#f-nom").value.trim() || p.nombre;
+    const precio = Number(fondo.querySelector("#f-pre").value);
+    const alt = fondo.querySelector("#f-alt").value.trim() || null;
+    try {
+      await guardarProductos([{...soloProducto(p), nombre,
+        precio: isNaN(precio) ? p.precio : precio, ean_alt: alt}]);
+      await cargar(); pintar(); cerrarFicha(); avisar("Cambios guardados");
+    } catch (err) { avisar("No se pudo guardar: " + err.message, "error"); }
+  };
+
+  const selProv = fondo.querySelector("#f-prov");
+  selProv.onchange = async () => {
+    if (selProv.value !== "nuevo") return;
+    try {
+      const nuevo = await crearProveedor();
+      selProv.innerHTML = opcionesProveedor(nuevo ? nuevo.id : "", false);
+    } catch (err) { avisar("No se pudo crear el proveedor: " + err.message, "error"); }
+  };
+
+  fondo.querySelector("#f-anotar").onclick = async () => {
+    const id = Number(selProv.value);
+    if (!id) { selProv.focus(); return; }
+    const nombre = (proveedores.find(x => x.id === id) || {}).nombre;
+    try {
+      await nuevoMovimiento(p.codigo, "ingreso", 0, "proveedor anotado a mano",
+                            {proveedor_id: id, comprobante: null, costo_unit: null});
+      await cargar(); pintar();
+      await abrirFicha(p.codigo);
+      avisar(`Anotado: lo conseguís en ${h(nombre)}`);
+    } catch (err) { avisar("No se pudo anotar: " + err.message, "error"); }
+  };
+
+  const caja = fondo.querySelector("#f-hist");
+  try {
+    const hist = await historialCompras(p.codigo);
+    caja.className = "";
+    caja.innerHTML = hist.length ? hist.map(m => `
+      <div class="hist-fila">
+        <span>${m.proveedores ? h(m.proveedores.nombre) : "Sin proveedor"}
+          <small>${fecha(m.creado_en)}${m.comprobante ? " · ticket " + h(m.comprobante) : ""}${m.cantidad === 0 ? " · anotado a mano" : ""}</small></span>
+        <span>${m.cantidad ? m.cantidad + " u." : ""}
+          <small>${m.costo_unit ? plata(m.costo_unit) + " c/u" : ""}</small></span>
+      </div>`).join("")
+      : `<p class="hoja-sub">Sin ingresos registrados.</p>`;
+  } catch (err) {
+    caja.textContent = "No se pudo traer el historial: " + err.message;
+  }
+}
+
 /* =====================================================================
    8. ARRANQUE
    ===================================================================== */
 (async function () {
-  recuperarConteo();
   const estado = document.getElementById("estado");
   const aviso = document.getElementById("aviso");
   const notas = [];
   if (!CONECTADO) {
     estado.textContent = "datos de prueba";
-    notas.push("Datos de prueba. Completá <code>SUPABASE_URL</code> y <code>SUPABASE_KEY</code> arriba de todo en este archivo.");
+    notas.push("Estás viendo datos de prueba. Completá <code>SUPABASE_URL</code> y <code>SUPABASE_ANON_KEY</code> arriba de todo en este archivo.");
   }
   if (!HAY_ESCANER)
     notas.push("Este navegador no puede escanear códigos de barras. Usá Chrome en Android.");
   if (notas.length) { aviso.hidden = false; aviso.innerHTML = notas.join("<br>"); }
 
+  try {
+    await cargarProveedores();
+  } catch (err) {
+    notas.push("No encuentro la tabla de proveedores. Corré <code>migracion-proveedores.sql</code> en el SQL Editor de Supabase.");
+    aviso.hidden = false; aviso.innerHTML = notas.join("<br>");
+  }
   try {
     await cargar();
     if (CONECTADO) { estado.textContent = "conectado"; estado.classList.add("vivo"); }
