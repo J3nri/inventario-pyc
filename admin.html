@@ -103,7 +103,7 @@ header{background:var(--tinta);padding:14px 18px;display:flex;align-items:center
 .lista{flex:1;padding:14px 18px;display:flex;flex-direction:column;gap:14px}
 .card{background:var(--blanco);border:2px solid var(--tinta);border-radius:var(--radius);overflow:hidden;box-shadow:4px 4px 0 rgba(43,33,24,.9)}
 .card-head{display:flex;align-items:center;gap:12px;padding:14px 14px 10px}
-.card-emoji{font-size:32px;width:52px;height:52px;background:#FDF1DC;border:2px solid var(--tinta);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-emoji{font-size:32px;width:52px;height:52px;background:#FDF1DC;border:2px solid var(--tinta);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
 .card-emoji.org{background:#E3F2FC;font-size:26px}
 .card-titulo{flex:1}
 .card-titulo b{font-family:'Fredoka',sans-serif;font-weight:600;font-size:17px;display:block}
@@ -712,7 +712,9 @@ function cardPuesto(p){
        </div>`;
   return `<div class="card ${p.publicado?'aprobado':''}" id="card-${p.id}">
     <div class="card-head">
-      <div class="card-emoji">${p.foto_url||'🎪'}</div>
+      <div class="card-emoji"${(p.foto_url||'').startsWith('http')
+          ? ` style="background-image:url('${p.foto_url}')"></div>`
+          : `>${p.foto_url||'🎪'}</div>`}
       <div class="card-titulo"><b>${p.nombre}</b><small>${rubro}</small></div>
     </div>
     <div class="card-body">
